@@ -1,0 +1,15 @@
+TSLA
+BABA
+
+TXN
+SPX
+
+SPX 
+ADBE
+BABA 
+TSLA 
+TXN
+ XLF
+ XLE 
+ SMH
+ RHT

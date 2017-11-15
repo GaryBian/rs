@@ -13,3 +13,10 @@ TXN
  XLE 
  SMH
  RHT
+
+
+
+SPX
+ADBE
+
+FB

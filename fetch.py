@@ -7,7 +7,8 @@ hdf = HDFStore('daily.h5')
 
 # slist = ['SPX', 'ADBE', 'BABA', 'TSLA', 'TXN']
 # slist = ['XLF', 'XLE', 'SMH']
-slist = ['RHT']
+# slist = ['RHT']
+slist = ['FB']
 
 for s in slist:
     data, meta_data = ts.get_daily_adjusted(symbol=s, outputsize='full')

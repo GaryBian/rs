@@ -3,6 +3,7 @@ from pandas import HDFStore, DataFrame
 import glob
 
 # read all csv files from symbol\csv directory
+# http://www.nasdaq.com/screening/company-list.aspx
 # add in the white list
 # remove symbols with . - etc.
 # read black list from symbol\black\black.txt. remove all black
@@ -35,7 +36,8 @@ df_full.drop_duplicates(subset='Symbol', inplace=True)
 print('Number of symbols combined after cleanup:', len(df_full.index))
 
 # export
-hdf = HDFStore('data/symbol.h5')
-hdf = df_full
+store_meta = HDFStore('data/meta.h5')
+store_meta.put('Symbol', df_full)
+
 df_full.to_csv('symbol/export/export.csv', columns=['Symbol', 'Name', 'industry'])
 print('Export complete!')

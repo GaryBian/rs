@@ -37,3 +37,5 @@ print(plot_df.head())
 
 plot_df.plot(x='Date', y='MA')
 plt.show()
+
+print('XLF')

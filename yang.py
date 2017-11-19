@@ -3,7 +3,7 @@ from pandas import HDFStore, DataFrame
 import stockstats
 from stockstats import StockDataFrame
 
-hdf = HDFStore('daily.h5')
+hdf = HDFStore('data/daily.h5')
 
 start_date = '2015-09-01'
 h1 = hdf['BABA'].filter(items=['open', 'high', 'low', 'adjusted close', 'volume'])

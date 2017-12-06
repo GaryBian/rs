@@ -1,0 +1,127 @@
+<html>
+
+
+<div id="symbols" style="display:none;">
+SMH
+ INTC  txn csco fxi qqqq gern AMR lnkd GTXI yoku KKD ADSK RHT xra acur
+  pcx stp tstc CBRX cdti crox fosl
+
+ CTRN FFHL ors rrgb ACH aapl
+</div>
+
+
+
+
+
+<div id="newslink">
+</div>
+
+
+
+
+<body>
+
+<script type="text/javascript" language="javascript">
+
+showLinks();
+
+function showLinks()
+{
+  var symbols = document.getElementById("symbols").innerHTML;
+
+  symbols = symbols.replace(/\n/g, "   ");
+  symbols = symbols.replace(/\r/g, "   ");
+
+  var con = "<table>";
+  var arr = symbols.split(" ");
+
+  for ( i = 0; i < arr.length; i++ )
+  {
+    var tt = prepareEntry(arr[i], i);
+    con += tt;
+  }
+  con += "</table>";
+
+  document.getElementById("newslink").innerHTML= con;
+}
+
+
+function prepareEntry(s, seq)
+{
+  s = s.replace(/^\s+|\s+$/g, '') ;
+
+  if ( s != "" )
+  {
+    return "<tr><td><a href=\"#" + seq + "\" onclick=\"clickSymbol3MoCandle(\'" + s + "\')\"><b>" + s.toUpperCase() + "</b>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol6Mo(\'" + s + "\')\">6m</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol1Year(\'" + s + "\')\">1y</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol3Year(\'" + s + "\')\">3y</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol3YearWeekly(\'" + s + "\')\">3yw</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol1d5min(\'" + s + "\')\">1d</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol5d15min(\'" + s + "\')\">5d</a>"
+    + "</td></tr>";
+  }
+  else
+  {
+    return "";
+  }
+}
+
+
+function clickSymbol3Mo(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?ma=6&maval=10%2C30%2C50&lf=268435456&type=1&size=4&state=8&style=320&time=6&freq=1&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol3MoCandle(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?ma=6&maval=10%2C30%2C50&lf=268435456&type=4&size=4&state=8&style=320&time=6&freq=1&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol6Mo(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?ma=6&maval=10%2C30%2C50&lf=268435456&type=4&size=4&state=8&style=320&time=7&freq=1&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol1Year(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?ma=3&maval=50%2C200&type=4&size=4&state=8&style=320&time=8&freq=1&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol3Year(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?ma=3&maval=50%2C200&type=1&size=4&state=8&style=320&time=10&freq=1&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol3YearWeekly(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?type=1&size=4&state=8&style=320&time=10&freq=2&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol5d15min(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?compidx=aaaaa%3A0&ma=0&maval=9&uf=0&lf=268435456&lf2=0&lf3=0&type=4&size=4&state=8&style=330&time=3&freq=7&nosettings=1&rand=102&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol1d5min(s)
+{
+  var url2 = "http://bigcharts.marketwatch.com/charts/big.chart?compidx=aaaaa%3A0&ma=2&maval=10&uf=0&lf=268435456&lf2=0&lf3=0&type=4&size=4&state=8&style=330&time=1&freq=6&nosettings=1&rand=102&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function openUrlOnTopFrame(url)
+{
+  top.frames['right1'].location.href = url;
+}
+
+</script>
+
+</body>
+</html>

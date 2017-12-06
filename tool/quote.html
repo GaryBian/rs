@@ -1,0 +1,268 @@
+<html>
+
+    <body>
+
+        <table>
+            <tr>
+                <td width="400px">
+
+                    <form>
+                        Symbol: <input type="text" name="symbol" id="symbolinput" /> <input type="button" style="width: 100px"  value="Submit" onclick="defaultchart();" />
+                    </form>
+
+                    <input type="button" style="width: 50px" value="Prev" onclick="prevchart();" />
+                    <input type="button" style="width: 50px" value="Next" onclick="nextchart();" />
+
+                    <input type="button" style="width: 50px" value="1y" onclick="clickSymbol1Year();" />
+                    <input type="button" style="width: 50px" value="5d15m" onclick="clickSymbol5Days15Minutes();" />
+                    <input type="button" style="width: 50px" value="1d5m" onclick="clickSymbol1Day5Min();" />
+                    <input type="button" style="width: 50px" value="5d_h" onclick="clickSymbol5DaysHour();" />
+                    <input type="button" style="width: 50px" value="10d_h" onclick="clickSymbol10DaysHour();" />
+                    <input type="button" style="width: 50px" value="2y_w" onclick="clickSymbol2YearWeek();" />
+					<input type="button" style="width: 50px" value="5y_w" onclick="clickSymbol5YearWeek();" />
+                    <input type="button" style="width: 50px" value="3y_w_sc" onclick="clickSymbol3YearWeekStockChart();" />
+                    <input type="button" style="width: 50px" value="finviz" onclick="finviz();" />
+Ver 2017.12
+
+ <br/><br/><a target="_blank" href="http://stockcharts.com/h-sc/ui?s=%24NYSI">$NYSI</a>
+                </td>
+
+                <td>
+
+                    <input type="button" style="width: 50px" value="TSLA" onclick="setSymbol('TSLA');" />
+                    <input type="button" style="width: 50px" value="RHT" onclick="setSymbol('RHT');" />
+                    <input type="button" style="width: 50px" value="ADBE" onclick="setSymbol('ADBE');" />
+                    <input type="button" style="width: 50px" value="SQ" onclick="setSymbol('SQ');" />
+                    <input type="button" style="width: 50px" value="NVDA" onclick="setSymbol('NVDA');" />
+                    <input type="button" style="width: 50px" value="MU" onclick="setSymbol('MU');" />
+                    <input type="button" style="width: 50px" value="EMC" onclick="setSymbol('EMC');" />
+
+                    <br>
+                    <input type="button" style="width: 50px" value="BABA" onclick="setSymbol('BABA');" />
+                    <input type="button" style="width: 50px" value="FB" onclick="setSymbol('FB');" />
+                    <input type="button" style="width: 50px" value="AMZN" onclick="setSymbol('AMZN');" />
+                    <input type="button" style="width: 50px" value="AAPL" onclick="setSymbol('AAPL');" />
+                    <input type="button" style="width: 50px" value="GOOGL" onclick="setSymbol('GOOGL');" />
+                    <input type="button" style="width: 50px" value="ACI" onclick="setSymbol('ACI');" />
+                    <input type="button" style="width: 50px" value="WLT" onclick="setSymbol('WLT');" />
+
+                    <br>
+                    <input type="button" style="width: 50px" value="BGC" onclick="setSymbol('BGC');" />
+                    <input type="button" style="width: 50px" value="DAN" onclick="setSymbol('DAN');" />
+                    <input type="button" style="width: 50px" value="MEOH" onclick="setSymbol('MEOH');" />
+                    <input type="button" style="width: 50px" value="CPLP" onclick="setSymbol('CPLP');" />
+                    <input type="button" style="width: 50px" value="GFF" onclick="setSymbol('GFF');" />
+                    <input type="button" style="width: 50px" value="NXY" onclick="setSymbol('NXY');" />
+                    <input type="button" style="width: 50px" value="PJC" onclick="setSymbol('PJC');" />
+
+                </td>
+
+
+            </tr>
+
+        </table>
+
+
+        <div id="range">
+        </div>
+
+    </body>
+
+
+    <script type="text/javascript">
+        var symbol;
+        var curMonth;
+        var curYear;
+
+        function defaultchart()
+        {
+            var d = new Date();
+            curMonth = d.getMonth() +1;
+            if( curMonth == 1 || curMonth == 2 || curMonth == 3 )
+            {
+                curMonth = 1;
+            }
+            if( curMonth == 4 || curMonth == 5 || curMonth == 6 )
+            {
+                curMonth = 4;
+            }
+
+            if( curMonth == 7|| curMonth ==8 || curMonth == 9 )
+            {
+                curMonth = 7;
+            }
+            if( curMonth == 10 || curMonth == 11 || curMonth == 12 )
+            {
+                curMonth = 10;
+            }
+            curYear = d.getFullYear();
+            symbol = document.getElementById("symbolinput").value;
+
+            top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=5&maval=8,21&lf=268435456&type=4&size=4&state=8&style=320&time=6&freq=1&mocktick=1&symb="+ symbol;
+            document.getElementById("range").innerHTML = "default 3 month";
+        }
+
+        function prevchart()
+        {
+            if(curMonth==4 || curMonth==7 || curMonth==10 )
+            {
+                curMonth = curMonth-3;
+            }
+
+            else if(curMonth==1)
+            {
+                curMonth = 10;
+                curYear = curYear-1;
+            }
+            makeUrlAndShowChart();
+        }
+
+        function nextchart()
+        {
+            if(curMonth==1 || curMonth==4 || curMonth==7 )
+            {
+                curMonth = curMonth+3;
+            }
+
+            else if(curMonth==10)
+            {
+                curMonth = 1;
+                curYear = curYear+1;
+            }
+            makeUrlAndShowChart();
+        }
+
+
+        function makeUrlAndShowChart()
+        {
+            if(curMonth==1)
+            {
+                var endm = 4;
+                var endyear = curYear;
+            }
+            else if(curMonth==4)
+            {
+                var endm = 7;
+                var endyear = curYear;
+            }
+
+            else if(curMonth==7)
+            {
+                var endm = 10;
+                var endyear = curYear;
+            }
+
+            else if(curMonth==10)
+            {
+                var endm = 1;
+                var endyear = curYear+1;
+            }
+            var url = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=330&freq=1&ma=6&maval=8,21,200&mocktick=1&lf=268435456&startdate="+ curMonth + "/1/"+curYear + "&enddate="+ endm+ "/10/" + endyear + "&symb=" + symbol;
+            top.frames['right1'].location.href = url;
+            document.getElementById("range").innerHTML = curMonth + "/1/"+curYear + "<br>"+ endm+ "/10/" + endyear;
+        }
+
+        function clickSymbol1Year()
+        {
+            var url2 = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=6&maval=8,21,200&type=4&size=4&state=8&style=320&time=8&freq=1&lf=268435456&mocktick=1&symb="+ symbol;
+
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "1 year";
+        }
+
+        function clickSymbol5Days15Minutes()
+        {
+            var url2 = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=6&maval=8,21,200&type=4&size=4&style=330&freq=7&time=3&lf=268435456&mocktick=1&symb="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "5 days";
+        }
+
+        function clickSymbol5DaysHour()
+		{
+		    top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=6&maval=8,21,200&type=4&size=4&style=330&freq=8&time=3&lf=268435456&mocktick=1&symb="+ symbol;
+            document.getElementById("range").innerHTML = "5 days";
+        }
+
+        function clickSymbol1Day5Min()
+		{
+		    top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=6&maval=8,21,200&type=4&size=4&style=330&freq=6&time=1&lf=268435456&mocktick=1&symb="+ symbol;
+            document.getElementById("range").innerHTML = "5 days";
+        }
+        
+		function clickSymbol10DaysHour()
+		{
+		    top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=6&maval=8,21,200&type=4&size=4&style=330&freq=8&time=18&lf=268435456&mocktick=1&symb="+ symbol;
+		    document.getElementById("range").innerHTML = "10 days";
+        }
+
+        function clickSymbol2YearWeek()
+        {
+            var url2 = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=320&freq=2&time=9&ma=6&maval=8,21,200&lf=268435456&mocktick=1&symb="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "2y weekly";
+        }
+		
+        function clickSymbol5YearWeek()
+        {
+            var url2 = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=330&freq=2&time=12&ma=6&maval=8,21,200&lf=268435456&mocktick=1&symb="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "5y weekly";
+        }
+		
+        function clickSymbol2YearWeekStockChart()
+        {
+            var url2 = "http://stockcharts.com/h-sc/ui?nIndicators=3&nOverlays=3&nMaxOverlays=3&nMaxIndicators=3&predefChanged=true&isPermanentId=false&setPermanentId=false&defaultChart=false&chartId=&style=&dataTotalDays=10&inputperiod=D&originalperiod=D&currentSetting=0|||&curCustomSetting=0|||&customSettingsCount=0&curChartList=&curChartName=&curChartNameIndex=0&period=W&period2=W&dataRange=predef%3A2|0|0&bar=5&gap=0&bars-fill=&years=2&months=0&days=0&bars-predef=&start=2011-01-09&end=%28today%29&symStyle=type%3D%22candle%22&renkoUnit=atr&renkoBoxSize=&renkoPriceField=close&kagiUnit=atr&kagiReversal=&kagiPriceField=close&chartSize=Landscape&customWidth=460&customHeight=284&chartSkin=default&showVolume=overlay&dataLog=true&dataSignalP=sig&dataSignalV=sig&layerTitles=true&antiAliasOn=true&overType_=B&overArgs_=&overType_0=EMA&overArgs_0=8&overType_1=EMA&overArgs_1=21&overType_2=EMA&overArgs_2=200&indType_=B&indArgs_=&indLoc_=below&indType_0=RSI&indArgs_0=14&indLoc_0=above&indType_1=MACD&indArgs_1=12%2C26%2C9&indLoc_1=below&indType_2=B&indArgs_2=&indLoc_2=below&syncHeight=&symbol="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "2y weekly StockChart";
+        }
+
+        function clickSymbol1YearWeekStockChart()
+        {
+            var url2 = "http://stockcharts.com/h-sc/ui?nIndicators=3&nOverlays=3&nMaxOverlays=3&nMaxIndicators=3&predefChanged=true&isPermanentId=false&setPermanentId=false&defaultChart=false&chartId=&style=&dataTotalDays=10&inputperiod=D&originalperiod=D&currentSetting=0|||&curCustomSetting=0|||&customSettingsCount=0&curChartList=&curChartName=&curChartNameIndex=0&period=W&period2=W&dataRange=predef%3A1|0|0&bar=5&gap=0&bars-fill=&years=1&months=0&days=0&bars-predef=&start=2011-01-09&end=%28today%29&symStyle=type%3D%22candle%22&renkoUnit=atr&renkoBoxSize=&renkoPriceField=close&kagiUnit=atr&kagiReversal=&kagiPriceField=close&chartSize=Landscape&customWidth=460&customHeight=284&chartSkin=default&showVolume=overlay&dataLog=true&dataSignalP=sig&dataSignalV=sig&layerTitles=true&antiAliasOn=true&overType_=B&overArgs_=&overType_0=EMA&overArgs_0=8&overType_1=EMA&overArgs_1=21&overType_2=EMA&overArgs_2=200&indType_=B&indArgs_=&indLoc_=below&indType_0=RSI&indArgs_0=14&indLoc_0=above&indType_1=MACD&indArgs_1=12%2C26%2C9&indLoc_1=below&indType_2=B&indArgs_2=&indLoc_2=below&syncHeight=&symbol="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "2y weekly StockChart";
+        }
+
+        function clickSymbol3YearWeekStockChart()
+        {
+            var url2 = "http://stockcharts.com/h-sc/ui?nIndicators=3&nOverlays=3&nMaxOverlays=3&nMaxIndicators=3&predefChanged=true&isPermanentId=false&setPermanentId=false&defaultChart=false&chartId=&style=&dataTotalDays=10&inputperiod=D&originalperiod=D&currentSetting=0|||&curCustomSetting=0|||&customSettingsCount=0&curChartList=&curChartName=&curChartNameIndex=0&period=W&period2=W&dataRange=predef%3A3|0|0&bar=5&gap=0&bars-fill=&years=3&months=0&days=0&bars-predef=&start=2011-01-09&end=%28today%29&symStyle=type%3D%22candle%22&renkoUnit=atr&renkoBoxSize=&renkoPriceField=close&kagiUnit=atr&kagiReversal=&kagiPriceField=close&chartSize=Landscape&customWidth=460&customHeight=284&chartSkin=default&showVolume=overlay&dataLog=true&dataSignalP=sig&dataSignalV=sig&layerTitles=true&antiAliasOn=true&overType_=B&overArgs_=&overType_0=EMA&overArgs_0=8&overType_1=EMA&overArgs_1=21&overType_2=EMA&overArgs_2=200&indType_=B&indArgs_=&indLoc_=below&indType_0=RSI&indArgs_0=14&indLoc_0=above&indType_1=MACD&indArgs_1=12%2C26%2C9&indLoc_1=below&indType_2=B&indArgs_2=&indLoc_2=below&syncHeight=&symbol="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "3y weekly StockChart";
+        }
+
+        function setSymbol(s)
+        {
+            document.getElementById("symbolinput").value =s;
+            symbol=s;
+            var d = new Date();
+            curMonth = d.getMonth() +1;
+            if( curMonth == 1 || curMonth == 2 || curMonth == 3 )
+            {
+                curMonth = 1;
+            }
+            if( curMonth == 4 || curMonth == 5 || curMonth == 6 )
+            {
+                curMonth = 4;
+            }
+
+            if( curMonth == 7|| curMonth ==8 || curMonth == 9 )
+            {
+                curMonth = 7;
+            }
+            if( curMonth == 10 || curMonth == 11 || curMonth == 12 )
+            {
+                curMonth = 10;
+            }
+            curYear = d.getFullYear();
+            top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=5&maval=8,21&lf=268435456&type=4&size=4&state=8&style=320&time=6&freq=1&mocktick=1&symb="+ symbol;
+            document.getElementById("range").innerHTML = "default 3 month";
+        }
+
+        function finviz(s)
+        {
+            top.frames['right1'].location.href = "http://finviz.com/quote.ashx?t="+ symbol;
+        }
+
+    </script>
+
+</html>

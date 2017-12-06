@@ -1,0 +1,330 @@
+<html>
+
+<body>
+
+<div id="codetable">test11</div>
+
+<button onclick="resetSelect();">Reset</button>
+
+
+<div id="resultcode">&nbsp;</div>
+
+</body>
+
+
+<script language="JavaScript" type="text/javascript">
+
+  populateCodeTable();
+
+  var goodarr = [];
+
+  var selectarr = [];
+  selectarr[0] = "";
+  selectarr[1] = "";
+
+goodarr["1"] = "YLN";
+goodarr["2"] = "OL9";
+goodarr["3"] = "C65";
+goodarr["4"] = "2LW";
+goodarr["5"] = "PQ4";
+goodarr["6"] = "VS7";
+goodarr["7"] = "HXB";
+goodarr["8"] = "Q4T";
+goodarr["9"] = "ZDI";
+goodarr["10"] = "HGK";
+
+goodarr["11"] = "V5Z";
+goodarr["12"] = "1TQ";
+goodarr["13"] = "WSA";
+goodarr["14"] = "GVP";
+goodarr["15"] = "AKX";
+goodarr["16"] = "HH0";
+goodarr["17"] = "EY1";
+goodarr["18"] = "QWK";
+goodarr["19"] = "FNR";
+goodarr["20"] = "AUY";
+
+goodarr["21"] = "CMU";
+goodarr["22"] = "H95";
+goodarr["23"] = "SPJ";
+goodarr["24"] = "EAC";
+goodarr["25"] = "NW9";
+goodarr["26"] = "IA6";
+goodarr["27"] = "ARN";
+goodarr["28"] = "OLK";
+goodarr["29"] = "B2J";
+goodarr["30"] = "WSZ";
+
+goodarr["31"] = "4W7";
+goodarr["32"] = "FOP";
+goodarr["33"] = "F0W";
+goodarr["34"] = "AXA";
+goodarr["35"] = "2SF";
+goodarr["36"] = "3GN";
+goodarr["37"] = "CVI";
+goodarr["38"] = "5SG";
+goodarr["39"] = "F8Y";
+goodarr["40"] = "CL7";
+
+goodarr["41"] = "G4B";
+goodarr["42"] = "VY8";
+goodarr["43"] = "QLE";
+goodarr["44"] = "6OX";
+goodarr["45"] = "AD0";
+goodarr["46"] = "3WA";
+goodarr["47"] = "ALQ";
+goodarr["48"] = "00D";
+goodarr["49"] = "NQZ";
+goodarr["50"] = "SBL";
+
+goodarr["51"] = "WM2";
+goodarr["52"] = "0MT";
+goodarr["53"] = "NMI";
+goodarr["54"] = "CWU";
+goodarr["55"] = "IU7";
+goodarr["56"] = "01J";
+goodarr["57"] = "258";
+goodarr["58"] = "DU4";
+goodarr["59"] = "PXV";
+goodarr["60"] = "SCR";
+
+goodarr["61"] = "FBP";
+goodarr["62"] = "NK8";
+goodarr["63"] = "FGK";
+goodarr["64"] = "GYP";
+goodarr["65"] = "RGK";
+goodarr["66"] = "FT3";
+goodarr["67"] = "N03";
+goodarr["68"] = "7UQ";
+goodarr["69"] = "PR7";
+goodarr["70"] = "MZG";
+
+goodarr["71"] = "5LX";
+goodarr["72"] = "XI5";
+goodarr["73"] = "VPE";
+goodarr["74"] = "3MB";
+goodarr["75"] = "O8L";
+goodarr["76"] = "P20";
+goodarr["77"] = "0P7";
+goodarr["78"] = "N6Y";
+goodarr["79"] = "LKH";
+goodarr["80"] = "2R4";
+
+goodarr["81"] = "X74";
+goodarr["82"] = "Z7T";
+goodarr["83"] = "2YX";
+goodarr["84"] = "5DU";
+goodarr["85"] = "X10";
+goodarr["86"] = "Q1C";
+goodarr["87"] = "QD7";
+goodarr["88"] = "5RY";
+goodarr["89"] = "1K9";
+goodarr["90"] = "Z5O";
+
+goodarr["91"] = "J3V";
+goodarr["92"] = "4VD";
+goodarr["93"] = "ALJ";
+goodarr["94"] = "DLY";
+goodarr["95"] = "P5U";
+goodarr["96"] = "349";
+goodarr["97"] = "0YB";
+goodarr["98"] = "C5F";
+goodarr["99"] = "TZ0";
+goodarr["100"] = "DEY";
+
+goodarr["101"] = "QFI";
+goodarr["102"] = "146";
+goodarr["103"] = "563";
+goodarr["104"] = "8KG";
+goodarr["105"] = "KUJ";
+goodarr["106"] = "Y99";
+goodarr["107"] = "TM6";
+goodarr["108"] = "CE6";
+goodarr["109"] = "1TG";
+goodarr["110"] = "68G";
+
+goodarr["111"] = "76W";
+goodarr["112"] = "16L";
+goodarr["113"] = "AGJ";
+goodarr["114"] = "7G4";
+goodarr["115"] = "59H";
+goodarr["116"] = "U78";
+goodarr["117"] = "4V3";
+goodarr["118"] = "DMB";
+goodarr["119"] = "AGV";
+goodarr["120"] = "NCY";
+
+goodarr["121"] = "2Y1";
+goodarr["122"] = "MYJ";
+goodarr["123"] = "JTB";
+goodarr["124"] = "LBI";
+goodarr["125"] = "05F";
+goodarr["126"] = "YSG";
+goodarr["127"] = "57B";
+goodarr["128"] = "E80";
+goodarr["129"] = "CQG";
+goodarr["130"] = "0OP";
+
+goodarr["131"] = "Q3P";
+goodarr["132"] = "0EM";
+goodarr["133"] = "JHB";
+goodarr["134"] = "XAB";
+goodarr["135"] = "QNQ";
+goodarr["136"] = "U6Z";
+goodarr["137"] = "D54";
+goodarr["138"] = "W2D";
+goodarr["139"] = "SSX";
+goodarr["140"] = "RZ4";
+
+goodarr["141"] = "OL9";
+goodarr["142"] = "T3E";
+goodarr["143"] = "CRB";
+goodarr["144"] = "CWN";
+goodarr["145"] = "1CE";
+goodarr["146"] = "NUW";
+goodarr["147"] = "JOA";
+goodarr["148"] = "Y0L";
+goodarr["149"] = "XZI";
+goodarr["150"] = "5DE";
+
+goodarr["151"] = "SZ5";
+goodarr["152"] = "ZM0";
+goodarr["153"] = "H1Q";
+goodarr["154"] = "2K3";
+goodarr["155"] = "UV4";
+goodarr["156"] = "UIF";
+goodarr["157"] = "TBQ";
+goodarr["158"] = "WY3";
+goodarr["159"] = "7ZW";
+goodarr["160"] = "BLZ";
+
+goodarr["161"] = "6EZ";
+goodarr["162"] = "IE2";
+goodarr["163"] = "2H2";
+goodarr["164"] = "JGB";
+goodarr["165"] = "KGL";
+goodarr["166"] = "Y6I";
+goodarr["167"] = "QZ9";
+goodarr["168"] = "013";
+goodarr["169"] = "HY9";
+goodarr["170"] = "56Z";
+
+goodarr["171"] = "KQI";
+goodarr["172"] = "51T";
+goodarr["173"] = "DPM";
+goodarr["174"] = "J77";
+goodarr["175"] = "SL0";
+goodarr["176"] = "9BE";
+goodarr["177"] = "P8Q";
+goodarr["178"] = "WWG";
+goodarr["179"] = "64I";
+goodarr["180"] = "00H";
+
+goodarr["181"] = "HWF";
+goodarr["182"] = "ZLJ";
+goodarr["183"] = "0B5";
+goodarr["184"] = "QP8";
+goodarr["185"] = "ZLF";
+goodarr["186"] = "KBZ";
+goodarr["187"] = "V9G";
+goodarr["188"] = "ZPQ";
+goodarr["189"] = "S0Y";
+goodarr["190"] = "FQ8";
+
+goodarr["191"] = "AMO";
+goodarr["192"] = "PDM";
+goodarr["193"] = "AFP";
+goodarr["194"] = "67G";
+goodarr["195"] = "JIO";
+goodarr["196"] = "IKY";
+goodarr["197"] = "NPF";
+goodarr["198"] = "YZD";
+goodarr["199"] = "GY5";
+goodarr["200"] = "G4K";
+
+goodarr["201"] = "C5Q";
+goodarr["202"] = "P09";
+goodarr["203"] = "NS4";
+goodarr["204"] = "3JD";
+goodarr["205"] = "G68";
+goodarr["206"] = "YE4";
+goodarr["207"] = "V9I";
+goodarr["208"] = "297";
+goodarr["209"] = "F2G";
+goodarr["210"] = "3KW";
+
+goodarr["211"] = "930";
+goodarr["212"] = "HZT";
+goodarr["213"] = "168";
+goodarr["214"] = "O4X";
+goodarr["215"] = "V9B";
+goodarr["216"] = "5X6";
+goodarr["217"] = "PQS";
+goodarr["218"] = "ZP5";
+goodarr["219"] = "C1I";
+goodarr["220"] = "ISE";
+
+goodarr["221"] = "KBX";
+goodarr["222"] = "1YG";
+goodarr["223"] = "CIB";
+goodarr["224"] = "MFM";
+
+
+function pickCode(s)
+{
+  if( selectarr[0] == "" )
+  {
+    selectarr[0] = s;
+  }
+  else
+  {
+    selectarr[1] = s;
+   // alert( goodarr[selectarr[0]] + goodarr[selectarr[1]]);
+
+    copyToClipboard(goodarr[selectarr[0]] + goodarr[selectarr[1]]);
+
+    document.getElementById("resultcode").innerHTML=goodarr[selectarr[0]] + goodarr[selectarr[1]];
+  }
+}
+
+function resetSelect()
+{
+  selectarr[0] = "";
+  selectarr[1] = "";
+  document.getElementById("resultcode").innerHTML="";
+}
+
+function populateCodeTable()
+{
+  var str="";
+  str = str + "<table border=1>";
+for (var i = 1; i<=224; i++ )
+{
+if ( i %20==1)
+{
+str = str + "<tr>";
+}
+
+str = str + "<td><button onclick=\"pickCode(\'" + i + "\');\">"+i+"</button></td>";
+if ( i %20==0)
+{
+str = str + "</tr>";
+}
+
+}
+
+  str = str + "</table>";
+  document.getElementById("codetable").innerHTML=str;
+}
+
+
+function copyToClipboard(s)
+{
+	if( window.clipboardData && clipboardData.setData )
+	{
+		clipboardData.setData("Text", s);
+	}
+}
+
+</script>
+</html>

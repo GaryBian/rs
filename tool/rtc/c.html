@@ -1,0 +1,99 @@
+<html>
+
+<div id="symbols" style="display:none;">
+
+GGR KBX LIA NAK QBC RTK XRA CJT COO DE E FIF FSR ING IWA JCG KOF MF SAY TBH TIF TKS WH WMG ABIO AFOP ALTI APWR BCON BCSI BIOF BNHNA CATM CBAK CHRD CONN CRA CWTR CYTX DDSS DRAM GEOI GNVC HEV IBAS INCY NENG NEXM NOIZ NTII OPXT QADI QLTI SEED SIGA SOMX SQNM SVLF SYMX TAMB TGIC TITN TIVO VARI WBSN
+
+</div>
+
+
+
+
+
+<div id="newslink">
+</div>
+
+
+
+
+<body>
+
+<script type="text/javascript" language="javascript">
+
+showLinks();
+
+function showLinks()
+{
+  var symbols = document.getElementById("symbols").innerHTML;
+
+  symbols = symbols.replace(/\n/g, "   ");
+  symbols = symbols.replace(/\r/g, "   ");
+
+  var con = "<table>";
+  var arr = symbols.split(" ");
+
+  for ( i = 0; i < arr.length; i++ )
+  {
+    var tt = prepareEntry(arr[i], i);
+    con += tt;
+  }
+  con += "</table>";
+
+  document.getElementById("newslink").innerHTML= con;
+}
+
+
+function prepareEntry(s, seq)
+{
+  s = s.replace(/^\s+|\s+$/g, '') ;
+
+  if ( s != "" )
+  {
+    return "<tr><td><a href=\"#" + seq + "\" onclick=\"clickSymbol1d1min(\'" + s + "\')\"><b>" + s.toUpperCase()
+    + "</b>&nbsp;<a href=\"#" + seq + "\" onclick=\"clickSymbol1d5min(\'" + s + "\')\">1d5m</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol2d1min(\'" + s + "\')\">2d1m</a>"
+    +"|<a href=\"#" + seq + "\" onclick=\"clickSymbol2d5min(\'" + s + "\')\">2d5m</a>"
+    + "</td></tr>";
+  }
+  else
+  {
+    return "";
+  }
+}
+
+
+
+function clickSymbol1d1min(s)
+{
+  var url2 = "http://realtime.bigcharts.com/custom/ameritrade-unified/big.chart?ma=2&maval=40%2C120&uf=0&lf=268435456&lf2=0&lf3=0&type=4&size=4&state=8&style=320&time=1&freq=9&nosettings=1&rand=102&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+
+function clickSymbol1d5min(s)
+{
+  var url2 = "http://realtime.bigcharts.com/custom/ameritrade-unified/big.chart?ma=2&maval=8%2C24&uf=0&lf=268435456&lf2=0&lf3=0&type=4&size=4&state=8&style=320&time=1&freq=6&nosettings=1&rand=102&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol2d1min(s)
+{
+  var url2 = "http://realtime.bigcharts.com/custom/ameritrade-unified/big.chart?ma=2&maval=40%2C120&uf=0&lf=268435456&lf2=0&lf3=0&type=4&size=4&state=8&style=320&time=2&freq=9&nosettings=1&rand=102&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function clickSymbol2d5min(s)
+{
+  var url2 = "http://realtime.bigcharts.com/custom/ameritrade-unified/big.chart?ma=2&maval=8%2C24&uf=0&lf=268435456&lf2=0&lf3=0&type=4&size=4&state=8&style=320&time=2&freq=6&nosettings=1&rand=102&mocktick=1&symb="+ s;
+  top.frames['right1'].location.href = url2;
+}
+
+function openUrlOnTopFrame(url)
+{
+  top.frames['right1'].location.href = url;
+}
+
+</script>
+
+</body>
+</html>

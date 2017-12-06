@@ -1,0 +1,113 @@
+<html>
+
+<div id="symbols" style="display:none;">
+
+   ACH FOSL
+   gild  pki coh adsk adbe uaua uso sial jec
+   fds rht bac
+
+
+
+
+
+</div>
+
+
+
+<a href="#" onclick="openUrlOnTopFrame('http://biz.yahoo.com/apf/archive.html')">AP</a><br>
+
+<a href="#" onclick="openUrlOnTopFrame('http://finance.yahoo.com/advances')">Advances</a><br>
+
+<a href="#" onclick="openUrlOnTopFrame('http://www.nyse.com')">NYSE</a><br>
+
+<a href="#" onclick="openUrlOnTopFrame('http://blogs.wsj.com/marketbeat/')">MarketBeat</a><br>
+
+<a href="#" onclick="openUrlOnTopFrame('http://www.bloomberg.com/news/breakingnews/')">bloomberg</a><br>
+
+<a href="#" onclick="openUrlOnTopFrame('http://www.cnbc.com/')">CNBC</a><br>
+
+
+<hr>
+
+<a href="http://finance.yahoo.com/q/cq?d=v2&s=^DJI,^GSPC,^IXIC,^VIX,RHT,TXN,SMH,FAZ,TZA,FXP,FOSL,LNKD,YOKU,ADSK,ADBE,GERN,YZC,GILD,AMR" target="new">Main</a><br>
+
+<a href="http://finance.yahoo.com/q/cq?d=v2&s=AMR,UAUA,LCC,DAL,CAL,LUV" target="new">Airline</a><br>
+
+<a href="http://finance.yahoo.com/q/cq?d=v2&s=GOOG,AAPL,RIMM" target="new">Tech</a><br>
+
+<a href="http://finance.yahoo.com/q/cq?d=v2&s=csco,jnpr,ffiv,ntap,emc,qlgc,CTXS,PLCM,HPQ,IBM,BRCM,ELX,VMW,BRCD,DELL,BMC,BCSI,rvbd" target="new">Networking</a><br>
+
+<a href="http://finance.yahoo.com/q/cq?d=v2&s=ORCL,IBM,RHT,MSFT" target="new">Software</a><br>
+
+<a href="http://finance.yahoo.com/q/cq?d=v2&s=CME,NYX,NDAQ,ICE" target="new">Exchange</a><br>
+
+<hr>
+
+
+<div id="newslink">
+</div>
+
+
+
+
+<body>
+
+<script type="text/javascript" language="javascript">
+
+showLinks();
+
+function showLinks()
+{
+  var symbols = document.getElementById("symbols").innerHTML;
+  var arr = symbols.split(" ");
+
+  var con = "<table>";
+
+  for ( i = 0; i < arr.length; i++ )
+  {
+    var tt = prepareEntry(arr[i]);
+
+    // alert(tt);
+    con += tt;
+  }
+
+  con += "</table>";
+  document.getElementById("newslink").innerHTML= con;
+}
+
+
+function prepareEntry(s)
+{
+  s = s.replace(/^\s+|\s+$/g, '') ;
+
+  if ( s != "" )
+  {
+    return "<tr><td><a href=\"#\" onclick=\"clickSymbol(\'" + s + "\')\">" + s + "</a></td></tr>";
+  }
+  else
+  {
+    return "";
+  }
+}
+
+
+function clickSymbol(s)
+{
+  var url2 = "http://finance.yahoo.com/q/h?s="+ s;
+  top.frames['right1'].location.href = url2;
+
+
+  var url1 = "http://online.wsj.com/quotes/news.html?symbol="+ s;
+  top.frames['right2'].location.href = url1;
+}
+
+
+function openUrlOnTopFrame(url)
+{
+  top.frames['right1'].location.href = url;
+}
+
+</script>
+
+</body>
+</html>

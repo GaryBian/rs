@@ -2,7 +2,7 @@ import pandas as pd
 from pandas import HDFStore, DataFrame
 import matplotlib.pyplot as plt
 
-hdf = HDFStore('daily.h5')
+hdf = HDFStore('data/daily.h5')
 
 start_date = '2016-01-01'
 h1 = hdf['SPX']

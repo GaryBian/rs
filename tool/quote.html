@@ -1,75 +1,77 @@
 <html>
 
-    <body>
+<body>
 
-        <table>
-            <tr>
-                <td width="400px">
+<table>
+    <tr>
+        <td width="400px">
 
-                    <form>
-                        Symbol: <input type="text" name="symbol" id="symbolinput" /> <input type="button" style="width: 100px"  value="Submit" onclick="defaultchart();" />
-                    </form>
+            <form>
+                Symbol: <input type="text" name="symbol" id="symbolinput"/> <input type="button" style="width: 100px"
+                                                                                   value="Submit"
+                                                                                   onclick="defaultchart();"/>
+            </form>
 
-                    <input type="button" style="width: 50px" value="Prev" onclick="prevchart();" />
-                    <input type="button" style="width: 50px" value="Next" onclick="nextchart();" />
+            <input type="button" style="width: 50px" value="Prev" onclick="prevchart();"/>
+            <input type="button" style="width: 50px" value="Next" onclick="nextchart();"/>
 
-                    <input type="button" style="width: 50px" value="1y" onclick="clickSymbol1Year();" />
-                    <input type="button" style="width: 50px" value="5d15m" onclick="clickSymbol5Days15Minutes();" />
-                    <input type="button" style="width: 50px" value="1d5m" onclick="clickSymbol1Day5Min();" />
-                    <input type="button" style="width: 50px" value="5d_h" onclick="clickSymbol5DaysHour();" />
-                    <input type="button" style="width: 50px" value="10d_h" onclick="clickSymbol10DaysHour();" />
-                    <input type="button" style="width: 50px" value="2y_w" onclick="clickSymbol2YearWeek();" />
-					<input type="button" style="width: 50px" value="5y_w" onclick="clickSymbol5YearWeek();" />
-                    <input type="button" style="width: 50px" value="3y_w_sc" onclick="clickSymbol3YearWeekStockChart();" />
-                    <input type="button" style="width: 50px" value="finviz" onclick="finviz();" />
-Ver 2017.12.2
+            <input type="button" style="width: 50px" value="1y" onclick="clickSymbol1Year();"/>
+            <input type="button" style="width: 50px" value="5d15m" onclick="clickSymbol5Days15Minutes();"/>
+            <input type="button" style="width: 50px" value="1d5m" onclick="clickSymbol1Day5Min();"/>
+            <input type="button" style="width: 50px" value="5d_h" onclick="clickSymbol5DaysHour();"/>
+            <input type="button" style="width: 50px" value="10d_h" onclick="clickSymbol10DaysHour();"/>
+            <input type="button" style="width: 50px" value="2y_w" onclick="clickSymbol2YearWeek();"/>
+            <input type="button" style="width: 50px" value="5y_w" onclick="clickSymbol5YearWeek();"/>
+            <input type="button" style="width: 50px" value="3y_w_sc" onclick="clickSymbol3YearWeekStockChart();"/>
+            <input type="button" style="width: 50px" value="finviz" onclick="finviz();"/>
+            Ver 2017.12.2
 
- <br/><br/><a target="_blank" href="http://stockcharts.com/h-sc/ui?s=%24NYSI">$NYSI</a>
-                </td>
+            <br/><br/><a target="_blank" href="http://stockcharts.com/h-sc/ui?s=%24NYSI">$NYSI</a>
+        </td>
 
-                <td>
+        <td>
 
-                    <input type="button" style="width: 50px" value="TSLA" onclick="setSymbol('TSLA');" />
-                    <input type="button" style="width: 50px" value="RHT" onclick="setSymbol('RHT');" />
-                    <input type="button" style="width: 50px" value="ADBE" onclick="setSymbol('ADBE');" />
-                    <input type="button" style="width: 50px" value="SQ" onclick="setSymbol('SQ');" />
-                    <input type="button" style="width: 50px" value="NVDA" onclick="setSymbol('NVDA');" />
-                    <input type="button" style="width: 50px" value="MU" onclick="setSymbol('MU');" />
-                    <input type="button" style="width: 50px" value="PYPL" onclick="setSymbol('PYPL');" />
+            <input type="button" style="width: 50px" value="TSLA" onclick="setSymbol('TSLA');"/>
+            <input type="button" style="width: 50px" value="RHT" onclick="setSymbol('RHT');"/>
+            <input type="button" style="width: 50px" value="ADBE" onclick="setSymbol('ADBE');"/>
+            <input type="button" style="width: 50px" value="SQ" onclick="setSymbol('SQ');"/>
+            <input type="button" style="width: 50px" value="NVDA" onclick="setSymbol('NVDA');"/>
+            <input type="button" style="width: 50px" value="MU" onclick="setSymbol('MU');"/>
+            <input type="button" style="width: 50px" value="PYPL" onclick="setSymbol('PYPL');"/>
 
-                    <br>
-                    <input type="button" style="width: 50px" value="BABA" onclick="setSymbol('BABA');" />
-                    <input type="button" style="width: 50px" value="FB" onclick="setSymbol('FB');" />
-                    <input type="button" style="width: 50px" value="AMZN" onclick="setSymbol('AMZN');" />
-                    <input type="button" style="width: 50px" value="AAPL" onclick="setSymbol('AAPL');" />
-                    <input type="button" style="width: 50px" value="GOOGL" onclick="setSymbol('GOOGL');" />
-                    <input type="button" style="width: 50px" value="INTC" onclick="setSymbol('INTC');" />
-                    <input type="button" style="width: 50px" value="WLT" onclick="setSymbol('WLT');" />
+            <br>
+            <input type="button" style="width: 50px" value="BABA" onclick="setSymbol('BABA');"/>
+            <input type="button" style="width: 50px" value="FB" onclick="setSymbol('FB');"/>
+            <input type="button" style="width: 50px" value="AMZN" onclick="setSymbol('AMZN');"/>
+            <input type="button" style="width: 50px" value="AAPL" onclick="setSymbol('AAPL');"/>
+            <input type="button" style="width: 50px" value="GOOGL" onclick="setSymbol('GOOGL');"/>
+            <input type="button" style="width: 50px" value="INTC" onclick="setSymbol('INTC');"/>
+            <input type="button" style="width: 50px" value="WLT" onclick="setSymbol('WLT');"/>
 
-                    <br>
-                    <input type="button" style="width: 50px" value="BGC" onclick="setSymbol('BGC');" />
-                    <input type="button" style="width: 50px" value="DAN" onclick="setSymbol('DAN');" />
-                    <input type="button" style="width: 50px" value="MEOH" onclick="setSymbol('MEOH');" />
-                    <input type="button" style="width: 50px" value="CPLP" onclick="setSymbol('CPLP');" />
-                    <input type="button" style="width: 50px" value="GFF" onclick="setSymbol('GFF');" />
-                    <input type="button" style="width: 50px" value="NXY" onclick="setSymbol('NXY');" />
-                    <input type="button" style="width: 50px" value="PJC" onclick="setSymbol('PJC');" />
+            <br>
+            <input type="button" style="width: 50px" value="BGC" onclick="setSymbol('BGC');"/>
+            <input type="button" style="width: 50px" value="DAN" onclick="setSymbol('DAN');"/>
+            <input type="button" style="width: 50px" value="MEOH" onclick="setSymbol('MEOH');"/>
+            <input type="button" style="width: 50px" value="CPLP" onclick="setSymbol('CPLP');"/>
+            <input type="button" style="width: 50px" value="GFF" onclick="setSymbol('GFF');"/>
+            <input type="button" style="width: 50px" value="NXY" onclick="setSymbol('NXY');"/>
+            <input type="button" style="width: 50px" value="PJC" onclick="setSymbol('PJC');"/>
 
-                </td>
-
-
-            </tr>
-
-        </table>
+        </td>
 
 
-        <div id="range">
-        </div>
+    </tr>
 
-    </body>
+</table>
 
 
-    <script type="text/javascript">
+<div id="range">
+</div>
+
+</body>
+
+
+<script type="text/javascript">
         var symbol;
         var curMonth;
         var curYear;
@@ -263,6 +265,7 @@ Ver 2017.12.2
             top.frames['right1'].location.href = "http://finviz.com/quote.ashx?t="+ symbol;
         }
 
-    </script>
+
+</script>
 
 </html>

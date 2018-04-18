@@ -1,6 +1,7 @@
 from alpha_vantage.timeseries import TimeSeries
 from pandas import HDFStore
 import time
+import pandas
 
 # Get all symbols in meta.h5 and get data from alpha_vantage
 
@@ -23,11 +24,14 @@ for i, row in df_symbol.iterrows():
     data.rename(columns={'1. open': 'open',
                          '2. high': 'high',
                          '3. low': 'low',
-                         '4. close': 'nonadj close',
-                         '5. adjusted close': 'close',
+                         '4. close': 'close',
+                         '5. adjusted close': 'adjusted close',
                          '6. volume': 'volume'
                          }, inplace=True)
+
+    data.index = pandas.to_datetime(data.index)
     hdf_daily[row['Symbol']] = data
     time.sleep(1)
 
 # alpha_vantage's column name has index at the beginning, like "1. open"
+# so rename it

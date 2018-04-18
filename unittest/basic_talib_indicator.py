@@ -21,6 +21,7 @@ analysis = pd.DataFrame(index=h1.index)
 
 sma = talib.EMA(numpy.asarray(h1['close']), 21)
 analysis['ema8'] = talib.EMA(numpy.asarray(h1['close']), 8)
+analysis['ema8'] = talib.EMA(numpy.asarray(h1['close']), 8)
 analysis['atr'] = talib.ATR(numpy.asarray(h1['high']), numpy.asarray(h1['low']), numpy.asarray(h1['close']),
                             timeperiod=20)
 

@@ -36,13 +36,13 @@ class CandleStick:
 
     def describe2(self):
         d = {}
-        d['bullflag'] = ("BULL" if self.is_bull else "BEAR")
+        d['bullflag'] = ("Bull" if self.is_bull else "Bear")
         d['body'] = "{:0.2f}".format(self.body)
         d['date'] = self.date.strftime('%Y-%m-%d')
         d['head_to_body_ratio'] = "{:0.0f}".format(self.head_to_body_ratio * 100.0)
         d['tail_to_body_ratio'] = "{:0.0f}".format(self.tail_to_body_ratio * 100.0)
         d['change'] = "{:0.1f}".format((self.close - self.open) * 100.0 / self.open)
-        s = "{date}{bullflag}|{body}|{head_to_body_ratio}%|{tail_to_body_ratio}%|{change}%.".format(**d)
+        s = "{date} | {bullflag} | {body} / {change}% | HEAD {head_to_body_ratio}% | TAIL {tail_to_body_ratio}%".format(**d)
 
         return s
 

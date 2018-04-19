@@ -3,14 +3,26 @@ import matplotlib.dates as mdates
 from mpl_finance import candlestick_ohlc
 from pandas import HDFStore
 from matplotlib import style
+import CandleStick as cs
 
 print(style.available)
 style.use('fast')
 
-hdf = HDFStore('../data/daily.h5')
+hdf = HDFStore('data/daily.h5')
 
 # access one symbol, it gives back a DataFrame
 maindf = hdf['TSLA'][-70:]
+
+#print out candlestick debug info
+for i, row in maindf.iterrows():
+    print(i)
+    c = cs.CandleStick.fromRow(maindf.loc['2018-2-14'])
+    c.associate_date(i)
+    print(c.describe2())
+    print(c)
+
+
+
 
 # Reset the index to remove Date column from index
 df = maindf.reset_index()

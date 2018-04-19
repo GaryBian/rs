@@ -32,6 +32,22 @@ class CandleStick:
         print("change %:" + str((self.close - self.open) * 100.0 / self.open))
         print("head_to_body_ratio %:" + str(self.head_to_body_ratio * 100.0))
         print("tail_to_body_ratio %:" + str(self.tail_to_body_ratio * 100.0))
+        print(self.date.strftime('%Y-%m-%d'))
+
+    def describe2(self):
+        d = {}
+        d['bullflag'] = ("BULL" if self.is_bull else "BEAR")
+        d['body'] = "{:0.2f}".format(self.body)
+        d['date'] = self.date.strftime('%Y-%m-%d')
+        d['head_to_body_ratio'] = "{:0.0f}".format(self.head_to_body_ratio * 100.0)
+        d['tail_to_body_ratio'] = "{:0.0f}".format(self.tail_to_body_ratio * 100.0)
+        d['change'] = "{:0.1f}".format((self.close - self.open) * 100.0 / self.open)
+        s = "{date}{bullflag}|{body}|{head_to_body_ratio}%|{tail_to_body_ratio}%|{change}%.".format(**d)
+
+        return s
+
+    def associate_date(self, date):
+        self.date = date
 
     @classmethod
     def fromRow(cls, row):

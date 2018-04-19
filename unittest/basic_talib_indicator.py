@@ -25,4 +25,4 @@ analysis['atr'] = talib.ATR(numpy.asarray(h1['high']), numpy.asarray(h1['low']),
                             timeperiod=20)
 
 analysis['test1'] = '5'
-print(sma)
+print(analysis)

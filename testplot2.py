@@ -47,8 +47,8 @@ f1.xaxis_date()
 f1.xaxis.set_major_formatter(mdates.DateFormatter('%y-%m-%d'))
 
 plt.xticks(rotation=45)
-plt.ylabel('Stock Price')
-plt.xlabel('Date Hours:Minutes')
+plt.ylabel(symbol)
+plt.xlabel('Date')
 
 dt = datetime.datetime(2018, 4, 4)
 for i, row in df.iterrows():

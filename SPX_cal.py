@@ -29,7 +29,7 @@ print(first_day, last_day)
 
 print(first_last_day_of_quarter(go_back_n_days(90)))
 
-hdf = HDFStore('daily.h5')
+hdf = HDFStore('data/daily.h5')
 
 start_date = '2016-01-01'
 h1 = hdf['SPX']

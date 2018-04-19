@@ -19,7 +19,7 @@ analysis['atr'] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf[
 analysis['atr_emr'] = talib.EMA(numpy.asarray(analysis['atr']), 60)
 
 # access one symbol, it gives back a DataFrame
-maindf = hdf[symbol][-40:]
+maindf = hdf[symbol][-140:]
 print(maindf.index.name)
 maindf.index.name = 'date'
 
@@ -55,5 +55,6 @@ dt = datetime.datetime(2018, 4, 4)
 for i, row in df.iterrows():
     tt = mdates.num2date(row['date'])
     f1.annotate(tt.strftime("%#d"), xy=(tt, row['high'] * 1.002))
+
 
 plt.show()

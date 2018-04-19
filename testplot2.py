@@ -7,12 +7,12 @@ import CandleStick as cs
 import datetime
 
 print(style.available)
-style.use('fivethirtyeight')
+#style.use('fivethirtyeight')
 
 hdf = HDFStore('data/daily.h5')
 
 # access one symbol, it gives back a DataFrame
-maindf = hdf['TSLA'][-40:]
+maindf = hdf['NVDA'][-40:]
 
 # print out candlestick debug info
 file = open("candle.txt", "w")
@@ -43,6 +43,6 @@ plt.xlabel('Date Hours:Minutes')
 dt = datetime.datetime(2018, 4, 4)
 for i, row in df.iterrows():
     tt = mdates.num2date(row['date'])
-    f1.annotate(tt.strftime("%#d"), xy=(tt, row['high']))
+    f1.annotate(tt.strftime("%#d"), xy=(tt, row['high']*1.002))
 
 plt.show()

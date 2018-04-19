@@ -38,6 +38,8 @@ print(h1.T)
 
 print(h1.describe())
 
+monthly_aapl = h1.resample('M').mean()
+print(monthly_aapl)
 
 print(h1[h1.volume > 5000000000])
 

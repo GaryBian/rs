@@ -17,6 +17,8 @@ class CandleStick:
             self.body_bottom = self.open
 
         self.body = self.body_top - self.body_bottom
+        if self.body < 0.01:
+            self.body = 0.01
         self.head = self.high - self.body_top
         self.tail = self.body_bottom - self.low
 
@@ -42,7 +44,8 @@ class CandleStick:
         d['head_to_body_ratio'] = "{:0.0f}".format(self.head_to_body_ratio * 100.0)
         d['tail_to_body_ratio'] = "{:0.0f}".format(self.tail_to_body_ratio * 100.0)
         d['change'] = "{:0.1f}".format((self.close - self.open) * 100.0 / self.open)
-        s = "{date} | {bullflag} | {body} / {change}% | HEAD {head_to_body_ratio}% | TAIL {tail_to_body_ratio}%".format(**d)
+        s = "{date} | {bullflag} | {body} / {change}% | HEAD {head_to_body_ratio}% | TAIL {tail_to_body_ratio}%".format(
+            **d)
 
         return s
 

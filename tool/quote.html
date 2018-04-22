@@ -14,6 +14,7 @@
 
             <input type="button" style="width: 50px" value="Prev" onclick="prevchart();"/>
             <input type="button" style="width: 50px" value="Next" onclick="nextchart();"/>
+            <input type="button" style="width: 50px" value="Prev3y" onclick="prevchart3y();"/>
 
             <input type="button" style="width: 50px" value="1y" onclick="clickSymbol1Year();"/>
             <input type="button" style="width: 50px" value="5d15m" onclick="clickSymbol5Days15Minutes();"/>
@@ -116,6 +117,12 @@
                 curMonth = 10;
                 curYear = curYear-1;
             }
+            makeUrlAndShowChart();
+        }
+		
+        function prevchart3y()
+        {
+            curYear = curYear-3;
             makeUrlAndShowChart();
         }
 

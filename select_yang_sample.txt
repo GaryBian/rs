@@ -36,3 +36,13 @@ PODD
 2017-01-10 | Bull | 41.2 / 7.7% | HEAD 10% | TAIL 2% | B/ATR 2.2
 
 2014-01-16 | Bull | 40.31 / 10.4% | HEAD 4% | TAIL 0% | B/ATR 3.9
+
+
+MU
+
+2018-02-06 | Bull | 43.88 / 8.2% | HEAD 2% | TAIL 0% | B/ATR 2.6
+
+
+SQ
+
+2016-03-02 | Bull | 11.97 / 10.6% | HEAD 3% | TAIL 2% | B/ATR nan

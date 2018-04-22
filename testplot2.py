@@ -21,6 +21,7 @@ analysis['atr_emr'] = talib.EMA(numpy.asarray(analysis['atr']), 60)
 
 # access one symbol, it gives back a DataFrame
 maindf = hdf[symbol][-40:]
+maindf.index.name = 'date'
 
 # print out candlestick debug info
 file = open(symbol + "_candle.txt", "w")

@@ -19,7 +19,7 @@ analysis['atr'] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf[
 analysis['atr_emr'] = talib.EMA(numpy.asarray(analysis['atr']), 60)
 
 # access one symbol, it gives back a DataFrame
-maindf = hdf[symbol][-140:]
+maindf = hdf[symbol][-80:]
 print(maindf.index.name)
 maindf.index.name = 'date'
 

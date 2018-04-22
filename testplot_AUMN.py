@@ -8,7 +8,7 @@ import talib
 import numpy
 import pandas as pd
 
-symbol = 'AUMN'
+symbol = 'TSLA'
 
 hdf = HDFStore('data/daily.h5')
 
@@ -51,10 +51,8 @@ plt.xticks(rotation=45)
 plt.ylabel(symbol)
 plt.xlabel('Date')
 
-dt = datetime.datetime(2018, 4, 4)
 for i, row in df.iterrows():
     tt = mdates.num2date(row['date'])
     f1.annotate(tt.strftime("%#d"), xy=(tt, row['high'] * 1.002))
-
 
 plt.show()

@@ -1,0 +1,9 @@
+2013-02-26 | Bull | 18.73 / 7.6% | HEAD 17% | TAIL 8% | B/ATR 1.9
+2013-05-24 | Bull | 19.89 / 6.4% | HEAD 1% | TAIL 1% | B/ATR 2.0
+2013-06-27 | Bull | 23.21 / 4.9% | HEAD 9% | TAIL 0% | B/ATR 1.7
+2013-11-08 | Bull | 30.71 / 5.0% | HEAD 20% | TAIL 16% | B/ATR 1.8
+2014-02-06 | Bull | 36.79 / 4.7% | HEAD 14% | TAIL 8% | B/ATR 1.5
+2014-05-13 | Bull | 45.26 / 4.4% | HEAD 11% | TAIL 7% | B/ATR 1.6
+2014-06-23 | Bull | 56.88 / 4.6% | HEAD 5% | TAIL 0% | B/ATR 1.9
+2014-08-04 | Bull | 61.62 / 4.5% | HEAD 16% | TAIL 0% | B/ATR 1.6
+2016-06-03 | Bull | 10.75 / 22.0% | HEAD 0% | TAIL 0% | B/ATR 2.8

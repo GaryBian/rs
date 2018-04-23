@@ -1,0 +1,10 @@
+2017-03-01 | Bull | 46.11 / 4.9% | HEAD 14% | TAIL 5% | B/ATR 1.6
+
+volume info
+last 5day sma
+volume 50 day ema
+
+
+over day price info
+
+atr

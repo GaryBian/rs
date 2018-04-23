@@ -1,8 +1,17 @@
 import toolkit
 
-# toolkit.download_alpha_vantage("MU")
-# toolkit.download_alpha_vantage("SQ")
+toolkit.download_alpha_vantage("MU")
+toolkit.download_alpha_vantage("SQ")
+toolkit.download_alpha_vantage("NVDA")
+toolkit.download_alpha_vantage("TSLA")
+toolkit.download_alpha_vantage("SPX")
+toolkit.download_alpha_vantage("TXN")
 
+toolkit.download_alpha_vantage("AUMN")
+
+
+toolkit.download_alpha_vantage("ECOM")
+toolkit.download_alpha_vantage("PODD")
 
 toolkit.download_alpha_vantage("PEIX")
 toolkit.download_alpha_vantage("IBM")

@@ -1,0 +1,2 @@
+2016-02-08 | Bull | 82.62 / 2.9% | HEAD 4% | TAIL 0% |B/ATR 2.0 |V/SHORT 1.8 |V/LONG 1.6
+2016-09-12 | Bull | 88.25 / 2.6% | HEAD 6% | TAIL 4% |B/ATR 2.3 |V/SHORT 0.8 |V/LONG 1.5

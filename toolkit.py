@@ -5,6 +5,7 @@ import CandleStick as cs
 import talib
 import numpy
 import pandas as pd
+from analysis import Metrics
 
 
 # print two files, one for all candles
@@ -72,3 +73,47 @@ def yang_candle_filter(candle, atr):
         return True
 
     return False
+
+
+def yang_candle_filter_vol(row):
+    candle = cs.CandleStick.fromRow(row)
+
+    head_to_body_ratio_max = 0.2
+    tail_to_body_ratio_max = 0.2
+    body_atr_ratio_min = 1.5
+    times_short_vol = 2.0
+    times_long_vol = 1.5
+
+    if candle.is_bull and (candle.head_to_body_ratio < head_to_body_ratio_max) and (
+            candle.tail_to_body_ratio < tail_to_body_ratio_max) and (
+            candle.body / row[Metrics.ATR_SMOOTH] > body_atr_ratio_min) and (
+            (row['volume'] > row[Metrics.VOL_SHORT_MA_PREV] * times_short_vol) or (
+            row['volume'] > row[Metrics.VOL_LONG_MA_PREV] * times_long_vol)):
+        return True
+
+    return False
+
+
+def add_analysis_data(fulldf):
+    # shift(1) is to get previous
+    # shift(-1) is to get next row
+
+    fulldf[Metrics.VOL_SHORT_MA] = talib.SMA(numpy.asarray(fulldf['volume']), 5)
+    fulldf[Metrics.VOL_SHORT_MA_PREV] = fulldf[Metrics.VOL_SHORT_MA].shift(1)
+    fulldf[Metrics.VOL_LONG_MA] = talib.EMA(numpy.asarray(fulldf['volume']), 50)
+    fulldf[Metrics.VOL_LONG_MA_PREV] = fulldf[Metrics.VOL_LONG_MA].shift(1)
+
+    fulldf[Metrics.MA8] = talib.EMA(numpy.asarray(fulldf['close']), 8)
+    fulldf[Metrics.MA21] = talib.EMA(numpy.asarray(fulldf['close']), 21)
+    fulldf[Metrics.MA200] = talib.EMA(numpy.asarray(fulldf['close']), 200)
+
+    fulldf[Metrics.CLOSE_PREV] = fulldf['close'].shift(1)
+    fulldf[Metrics.CHANGE] = fulldf['close'] - fulldf[Metrics.CLOSE_PREV]
+    fulldf[Metrics.CHANGE_PCT] = fulldf['close'].pct_change()
+
+    fulldf[Metrics.ATR] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf['low']),
+                                    numpy.asarray(fulldf['close']),
+                                    timeperiod=50)
+    fulldf[Metrics.ATR_SMOOTH] = talib.EMA(numpy.asarray(fulldf[Metrics.ATR]), 50)
+
+    return fulldf

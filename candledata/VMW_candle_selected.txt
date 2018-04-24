@@ -1,8 +1,8 @@
-2010-01-14 | Bull | 47.45 / 4.8% | HEAD 7% | TAIL 10% | B/ATR 1.5
-2010-05-21 | Bull | 60.34 / 7.8% | HEAD 2% | TAIL 0% | B/ATR 2.7
-2010-06-03 | Bull | 70.71 / 5.8% | HEAD 11% | TAIL 9% | B/ATR 2.2
-2010-07-07 | Bull | 69.69 / 6.4% | HEAD 7% | TAIL 0% | B/ATR 2.1
-2010-08-20 | Bull | 81.79 / 4.3% | HEAD 5% | TAIL 12% | B/ATR 1.5
+2008-05-15 | Bull | 72.08 / 10.9% | HEAD 0% | TAIL 11% | B/ATR 1.6
+2010-01-14 | Bull | 47.45 / 4.8% | HEAD 7% | TAIL 10% | B/ATR 1.6
+2010-05-21 | Bull | 60.34 / 7.8% | HEAD 2% | TAIL 0% | B/ATR 2.6
+2010-06-03 | Bull | 70.71 / 5.8% | HEAD 11% | TAIL 9% | B/ATR 2.1
+2010-07-07 | Bull | 69.69 / 6.4% | HEAD 7% | TAIL 0% | B/ATR 2.0
 2013-12-04 | Bull | 83.7 / 4.7% | HEAD 15% | TAIL 4% | B/ATR 1.8
 2014-01-07 | Bull | 94.71 / 5.4% | HEAD 3% | TAIL 0% | B/ATR 2.4
 2014-01-14 | Bull | 96.73 / 3.5% | HEAD 10% | TAIL 8% | B/ATR 1.6
@@ -10,9 +10,7 @@
 2014-04-01 | Bull | 111.8 / 3.2% | HEAD 1% | TAIL 3% | B/ATR 1.5
 2017-05-22 | Bull | 95.24 / 2.8% | HEAD 7% | TAIL 2% | B/ATR 1.9
 2017-07-17 | Bull | 91.05 / 2.9% | HEAD 4% | TAIL 16% | B/ATR 1.7
-2017-12-06 | Bull | 116.67 / 2.2% | HEAD 9% | TAIL 17% | B/ATR 1.5
-2017-12-15 | Bull | 123.8 / 2.2% | HEAD 13% | TAIL 20% | B/ATR 1.6
-2017-12-18 | Bull | 128.89 / 3.0% | HEAD 16% | TAIL 8% | B/ATR 2.2
-2018-02-13 | Bull | 120.08 / 3.6% | HEAD 4% | TAIL 19% | B/ATR 1.7
-2018-02-14 | Bull | 124.42 / 4.2% | HEAD 6% | TAIL 4% | B/ATR 2.0
-2018-03-07 | Bull | 124.25 / 4.0% | HEAD 5% | TAIL 4% | B/ATR 1.6
+2017-12-15 | Bull | 123.8 / 2.2% | HEAD 13% | TAIL 20% | B/ATR 1.5
+2017-12-18 | Bull | 128.89 / 3.0% | HEAD 16% | TAIL 8% | B/ATR 2.1
+2018-02-13 | Bull | 120.08 / 3.6% | HEAD 4% | TAIL 19% | B/ATR 1.6
+2018-02-14 | Bull | 124.42 / 4.2% | HEAD 6% | TAIL 4% | B/ATR 1.8

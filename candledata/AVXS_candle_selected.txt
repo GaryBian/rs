@@ -1,6 +1,6 @@
-2016-11-23 | Bull | 59.44 / 9.1% | HEAD 17% | TAIL 6% | B/ATR 1.9
-2016-12-23 | Bull | 53.29 / 9.1% | HEAD 4% | TAIL 0% | B/ATR 1.5
-2017-01-04 | Bull | 51.91 / 10.2% | HEAD 16% | TAIL 0% | B/ATR 1.6
+2016-07-20 | Bull | 40.65 / 9.6% | HEAD 9% | TAIL 12% | B/ATR 1.5
+2016-11-23 | Bull | 59.44 / 9.1% | HEAD 17% | TAIL 6% | B/ATR 1.8
+2017-01-04 | Bull | 51.91 / 10.2% | HEAD 16% | TAIL 0% | B/ATR 1.5
 2017-12-07 | Bull | 98.7 / 7.3% | HEAD 5% | TAIL 7% | B/ATR 1.7
 2018-01-29 | Bull | 123.0 / 9.6% | HEAD 12% | TAIL 9% | B/ATR 2.5
 2018-01-30 | Bull | 124.55 / 11.2% | HEAD 18% | TAIL 11% | B/ATR 2.9

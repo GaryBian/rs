@@ -15,8 +15,8 @@ def print_candle_debug(symbol):
     analysis = pd.DataFrame(index=fulldf.index)
     analysis['atr'] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf['low']),
                                 numpy.asarray(fulldf['close']),
-                                timeperiod=60)
-    analysis['atr_emr'] = talib.EMA(numpy.asarray(analysis['atr']), 60)
+                                timeperiod=50)
+    analysis['atr_emr'] = talib.EMA(numpy.asarray(analysis['atr']), 50)
 
     # print out candlestick debug info
     file = open(symbol + "_candle.txt", "w")
@@ -115,5 +115,8 @@ def add_analysis_data(fulldf):
                                     numpy.asarray(fulldf['close']),
                                     timeperiod=50)
     fulldf[Metrics.ATR_SMOOTH] = talib.EMA(numpy.asarray(fulldf[Metrics.ATR]), 50)
+
+    fulldf["v_vs_short"] = fulldf['volume'] / fulldf[Metrics.VOL_SHORT_MA_PREV]
+    fulldf["v_vs_long"] = fulldf['volume'] / fulldf[Metrics.VOL_LONG_MA_PREV]
 
     return fulldf

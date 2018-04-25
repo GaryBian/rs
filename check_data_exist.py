@@ -4,6 +4,8 @@ import numpy
 import pandas as pd
 from analysis import Metrics
 import toolkit
+import datetime
+from datetime import datetime, timedelta
 
 
 def full_quote(symbol):
@@ -18,6 +20,18 @@ def full_quote(symbol):
         print(symbol + ' in store')
         # get last row
         lastrowindex = store[symbol].tail(1).index
+
+        MAX_GAP_ALLOWED = 50
+
+        print(lastrowindex > datetime(2016, 1, 1))
+        print(lastrowindex > datetime(2018, 4, 23))
+        print(lastrowindex > datetime(2018, 4, 24))
+        print(lastrowindex > datetime(2018, 4, 25))
+
+        print(lastrowindex > datetime.today())
+
+        print(datetime.today() - timedelta(days=MAX_GAP_ALLOWED))
+        print(lastrowindex > datetime.today() - timedelta(days=MAX_GAP_ALLOWED))
     else:
         print(symbol + ' not in store')
         get_both_merge(symbol)
@@ -41,6 +55,4 @@ def get_both_merge(symbol):
     return bigdata
 
 
-full_quote('akam')
-
-full_quote('AKAM')
+full_quote('SPX')

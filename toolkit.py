@@ -61,6 +61,34 @@ def download_alpha_vantage(symbol):
     time.sleep(1)
 
 
+def alpha_vantage_daily_full(symbol):
+    return alpha_vantage(symbol, 'full')
+
+
+def alpha_vantage_daily_compact(symbol):
+    return alpha_vantage(symbol, 'compact')
+
+
+def alpha_vantage(symbol, outputsize):
+    # alpha_vantage's column name has index at the beginning, like "1. open"
+    # so rename it
+    symbol = symbol.strip()
+    ts = TimeSeries(key='EI7H5JUGQ20Q3GDK', output_format='pandas')
+    print(ts.retries)
+    print(symbol)
+
+    data, meta_data = ts.get_daily_adjusted(symbol=symbol, outputsize=outputsize)
+    data.rename(columns={'1. open': 'open',
+                         '2. high': 'high',
+                         '3. low': 'low',
+                         '4. close': 'close',
+                         '5. adjusted close': 'adjusted close',
+                         '6. volume': 'volume'
+                         }, inplace=True)
+    data.index = pd.to_datetime(data.index)
+    return data, meta_data
+
+
 def yang_candle_filter(candle, atr):
     head_to_body_ratio_max = 0.2
     tail_to_body_ratio_max = 0.2

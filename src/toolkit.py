@@ -41,6 +41,7 @@ class AlphaVantageData:
             data, meta_data = self.get_daily_adjusted(symbol, 'compact')
             self.merge_and_add_to_store(symbol, data)
             print("complete download incremental data of:" + symbol)
+            time.sleep(1)
 
         self.audit()
         print('AlphaVantageData incremental update fully completed')

@@ -17,12 +17,5 @@ boot = toolkit.Bootup()
 print(boot)
 
 vantage = toolkit.AlphaVantageData(boot.data_file)
-print(vantage)
-symbols = vantage.all_symbols_in_store()
-print(symbols)
 
-print(vantage.audit())
-
-#vantage.get_daily_adjusted('TSLA', 'compact')
-
-vantage.incremental_update()
+vantage.get_daily_adjusted('TSLA', 'compact')

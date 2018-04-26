@@ -116,8 +116,23 @@ class AlphaVantageData:
         #                 '5. adjusted close': 'adjusted close',
         #                '6. volume': 'volume'
         #               }, inplace=True)
+
+        self.validate_columns(data)
         data.index = pd.to_datetime(data.index)
         return data, meta_data
+
+    def validate_columns(self, df):
+        print('validate_columns')
+        if 'open' in df.columns and 'high' in df.columns and 'low' in df.columns and 'close' in df.columns \
+                and 'adjusted close' in df.columns and 'volume' in df.columns:
+            print('validate_columns success')
+        else:
+            raise ValueError('DataFrame column names wrong')
+
+        if df.index.name == 'Date':
+            print('validate_columns index name is correct')
+        else:
+            raise ValueError('DataFrame index name wrong:' + df.index.name)
 
 
 # print two files, one for all candles

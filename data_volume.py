@@ -5,7 +5,7 @@ import pandas as pd
 from analysis import Metrics
 import toolkit
 
-symbol = 'MU'
+symbol = 'CRS'
 
 hdf = HDFStore('data/daily.h5')
 

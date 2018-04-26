@@ -122,6 +122,7 @@ class AlphaVantageData:
             print('column names are good')
         elif '1. open' in df.columns and '2. high' in df.columns and '3. low' in df.columns and '4. close' in df.columns \
                 and '5. adjusted close' in df.columns and '6. volume' in df.columns:
+            print('column names renamed')
             df.rename(columns={'1. open': 'open',
                                '2. high': 'high',
                                '3. low': 'low',

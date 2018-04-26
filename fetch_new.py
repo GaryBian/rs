@@ -21,13 +21,14 @@ hdf_daily = HDFStore('data/daily.h5')
 for i, row in df_symbol.iterrows():
     print(i, row['Symbol'])
     data, meta_data = ts.get_daily_adjusted(symbol=row['Symbol'], outputsize='full')
-    data.rename(columns={'1. open': 'open',
-                         '2. high': 'high',
-                         '3. low': 'low',
-                         '4. close': 'close',
-                         '5. adjusted close': 'adjusted close',
-                         '6. volume': 'volume'
-                         }, inplace=True)
+
+    #    data.rename(columns={'1. open': 'open',
+    #                        '2. high': 'high',
+    #                       '3. low': 'low',
+    #                      '4. close': 'close',
+    #                     '5. adjusted close': 'adjusted close',
+    #                    '6. volume': 'volume'
+    #                   }, inplace=True)
 
     data.index = pandas.to_datetime(data.index)
     hdf_daily[row['Symbol']] = data

@@ -1,4 +1,4 @@
-import toolkit
+import toolkit1
 from pandas import HDFStore
 import CandleStick as cs
 import datetime
@@ -10,10 +10,10 @@ from analysis import Metrics
 
 def run_one(symbol, hdf):
     fulldf = hdf[symbol]
-    toolkit.add_analysis_data(fulldf)
+    toolkit1.add_analysis_data(fulldf)
     file_s = open(symbol + "_candle_volselected.txt", "w")
     for i, row in fulldf.iterrows():
-        if i > datetime.datetime(2016, 1, 1) and toolkit.yang_candle_filter_vol(row):
+        if i > datetime.datetime(2016, 1, 1) and toolkit1.yang_candle_filter_vol(row):
             c = cs.CandleStick.fromRow(row)
             c.associate_date(i)
             file_s.write(c.describe2())

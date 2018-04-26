@@ -3,7 +3,7 @@ import talib
 import numpy
 import pandas as pd
 from analysis import Metrics
-import toolkit
+import toolkit1
 import datetime
 from datetime import datetime, timedelta
 
@@ -38,8 +38,8 @@ def full_quote(symbol):
 
 
 def get_both_merge(symbol):
-    data_full, meta_full = toolkit.alpha_vantage_daily_full(symbol)
-    data_compact, meta_compact = toolkit.alpha_vantage_daily_compact(symbol)
+    data_full, meta_full = toolkit1.alpha_vantage_daily_full(symbol)
+    data_compact, meta_compact = toolkit1.alpha_vantage_daily_compact(symbol)
     bigdata = data_full.append(data_compact)
     print(data_full.shape)
     print(data_compact.shape)

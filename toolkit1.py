@@ -6,6 +6,15 @@ import talib
 import numpy
 import pandas as pd
 from analysis import Metrics
+import os
+
+
+class Bootup:
+    def __init__(self):
+        self.base_path = os.path.dirname(os.path.abspath(__file__))
+        self.data_path = os.path.abspath(os.path.join(self.base_path, '..', 'data'))
+        print('boot up base path:' + self.base_path)
+        print('boot up data path:' + self.data_path)
 
 
 # print two files, one for all candles
@@ -48,16 +57,10 @@ def download_alpha_vantage(symbol):
     print(symbol)
 
     data, meta_data = ts.get_daily_adjusted(symbol=symbol, outputsize='full')
-    data.rename(columns={'1. open': 'open',
-                         '2. high': 'high',
-                         '3. low': 'low',
-                         '4. close': 'close',
-                         '5. adjusted close': 'adjusted close',
-                         '6. volume': 'volume'
-                         }, inplace=True)
 
     data.index = pd.to_datetime(data.index)
     hdf_daily[symbol] = data
+    hdf_daily.close()
     time.sleep(1)
 
 

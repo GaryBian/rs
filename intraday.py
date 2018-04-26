@@ -2,7 +2,7 @@ from alpha_vantage.timeseries import TimeSeries
 from pandas import HDFStore
 import time
 import pandas
-import toolkit
+import toolkit1
 
 # Get all symbols in meta.h5 and get data from alpha_vantage
 
@@ -17,4 +17,5 @@ import toolkit
 
 # toolkit.alpha_vantage_daily_full('TSLA')
 
-toolkit.alpha_vantage_daily_compact('TSLA')
+b = toolkit1.Bootup()
+print(b)

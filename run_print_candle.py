@@ -1,4 +1,4 @@
-import toolkit
+import toolkit1
 from pandas import HDFStore
 import CandleStick as cs
 import datetime
@@ -18,4 +18,4 @@ import pandas as pd
 hdf = HDFStore('data/daily.h5')
 keys = hdf.keys()
 for symbol in keys:
-    toolkit.print_candle_debug(symbol.strip('/'))
+    toolkit1.print_candle_debug(symbol.strip('/'))

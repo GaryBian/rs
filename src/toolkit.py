@@ -133,6 +133,7 @@ class AlphaVantageData:
         else:
             raise ValueError('DataFrame column names wrong')
 
+        df = df.filter(items=['open', 'high', 'low', 'close', 'adjusted close', 'volume'])
         df.index = pd.to_datetime(df.index)
         return df, meta_data
 

@@ -1,11 +1,8 @@
 from alpha_vantage.timeseries import TimeSeries
 import time
 from pandas import HDFStore
-import CandleStick as cs
-import talib
 import numpy
 import pandas as pd
-from analysis import Metrics
 import os
 from datetime import datetime, timedelta
 

@@ -1,0 +1,140 @@
+import toolkit
+from pandas import HDFStore
+import numpy
+import pandas as pd
+
+# Get all symbols in meta.h5 and get data from alpha_vantage
+
+# Standard format
+# open
+# high
+# low
+# nonadj close
+# close
+# volume
+
+
+# toolkit.alpha_vantage_daily_full('TSLA')
+
+symbols = []
+
+symbols.append(' ')
+
+symbols.append('ATVI')
+symbols.append('ADBE')
+symbols.append('ALXN')
+symbols.append('ALGN')
+symbols.append('GOOG')
+symbols.append('GOOGL')
+symbols.append('AMZN')
+symbols.append('AAL')
+symbols.append('AMGN')
+symbols.append('ADI')
+symbols.append('AAPL')
+symbols.append('AMAT')
+symbols.append('ASML')
+symbols.append('ADSK')
+symbols.append('ADP')
+symbols.append('BIDU')
+symbols.append('BIIB')
+symbols.append('BMRN')
+symbols.append('BKNG')
+symbols.append('AVGO')
+symbols.append('CA')
+symbols.append('CDNS')
+symbols.append('CELG')
+symbols.append('CERN')
+symbols.append('CHTR')
+symbols.append('CHKP')
+symbols.append('CTAS')
+symbols.append('CSCO')
+symbols.append('CTXS')
+symbols.append('CTSH')
+symbols.append('CMCSA')
+symbols.append('COST')
+symbols.append('CSX')
+symbols.append('CTRP')
+symbols.append('XRAY')
+symbols.append('DISH')
+symbols.append('DLTR')
+symbols.append('EBAY')
+symbols.append('EA')
+symbols.append('EXPE')
+symbols.append('ESRX')
+symbols.append('FAST')
+symbols.append('FISV')
+symbols.append('GILD')
+symbols.append('HAS')
+symbols.append('HSIC')
+symbols.append('HOLX')
+symbols.append('IDXX')
+symbols.append('ILMN')
+symbols.append('INCY')
+symbols.append('INTC')
+symbols.append('INTU')
+symbols.append('ISRG')
+symbols.append('JBHT')
+symbols.append('JD')
+symbols.append('KLAC')
+symbols.append('LRCX')
+symbols.append('LBTYA')
+symbols.append('LBTYK')
+symbols.append('MAR')
+symbols.append('MXIM')
+symbols.append('MELI')
+symbols.append('MCHP')
+symbols.append('MU')
+symbols.append('MSFT')
+symbols.append('MDLZ')
+symbols.append('MNST')
+symbols.append('MYL')
+symbols.append('NTES')
+symbols.append('NFLX')
+symbols.append('NVDA')
+symbols.append('ORLY')
+symbols.append('PCAR')
+symbols.append('PAYX')
+symbols.append('PYPL')
+symbols.append('QCOM')
+symbols.append('QRTEA')
+symbols.append('REGN')
+symbols.append('ROST')
+symbols.append('STX')
+symbols.append('SHPG')
+symbols.append('SIRI')
+symbols.append('SWKS')
+symbols.append('SBUX')
+symbols.append('SYMC')
+symbols.append('SNPS')
+symbols.append('TMUS')
+symbols.append('TTWO')
+symbols.append('TSLA')
+symbols.append('TXN')
+symbols.append('KHC')
+symbols.append('FOX')
+symbols.append('FOXA')
+symbols.append('ULTA')
+symbols.append('VRSK')
+symbols.append('VRTX')
+symbols.append('VOD')
+symbols.append('WBA')
+symbols.append('WDC')
+symbols.append('WDAY')
+symbols.append('WYNN')
+symbols.append('XLNX')
+
+boot = toolkit.Bootup()
+print(boot)
+vantage = toolkit.AlphaVantageData(boot.data_file)
+
+data_store = HDFStore(boot.data_file, mode='a')
+for s in symbols:
+    try:
+        s = toolkit.AlphaVantageData.cleanse_symbol(s)
+        df, meta = vantage.get_daily_adjusted(s, 'full')
+        data_store[s] = df
+        print(s + ' done')
+    except:
+        print("Error working on: " + s)
+
+data_store.close()

@@ -12,9 +12,11 @@ class Bootup:
         self.base_path = os.path.dirname(os.path.abspath(__file__))
         self.data_path = os.path.normpath(os.path.join(self.base_path, '..', 'data'))
         self.data_file = os.path.normpath(os.path.join(self.data_path, 'daily.h5'))
+        self.meta_file = os.path.normpath(os.path.join(self.data_path, 'meta.h5'))
         print('boot up base path:' + self.base_path)
         print('boot up data path:' + self.data_path)
         print('boot up data file:' + self.data_file)
+        print('boot up meta_file:' + self.meta_file)
 
 
 class AlphaVantageData:
@@ -108,6 +110,9 @@ class AlphaVantageData:
         # this method only download, do NOT deal with data store
         symbol = self.cleanse_symbol(symbol)
         df, meta_data = self.time_series.get_daily_adjusted(symbol=symbol, outputsize=outputsize)
+
+        if df.count == 0:
+            raise ValueError('Data empty:' + symbol)
 
         print(df.index.name)
         print(df.columns.values)

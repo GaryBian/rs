@@ -107,32 +107,33 @@ class AlphaVantageData:
     def get_daily_adjusted(self, symbol, outputsize):
         # this method only download, do NOT deal with data store
         symbol = self.cleanse_symbol(symbol)
-        data, meta_data = self.time_series.get_daily_adjusted(symbol=symbol, outputsize=outputsize)
+        df, meta_data = self.time_series.get_daily_adjusted(symbol=symbol, outputsize=outputsize)
 
-        # data.rename(columns={'1. open': 'open',
-        #                    '2. high': 'high',
-        #                   '3. low': 'low',
-        #                  '4. close': 'close',
-        #                 '5. adjusted close': 'adjusted close',
-        #                '6. volume': 'volume'
-        #               }, inplace=True)
+        print(df.index.name)
+        print(df.columns.values)
 
-        self.validate_columns(data)
-        data.index = pd.to_datetime(data.index)
-        return data, meta_data
+        if df.index.name == 'Date' or df.index.name == 'date':
+            df.index.name = 'date'
+        else:
+            raise ValueError('DataFrame index name wrong:' + df.index.name)
 
-    def validate_columns(self, df):
-        print('validate_columns')
         if 'open' in df.columns and 'high' in df.columns and 'low' in df.columns and 'close' in df.columns \
                 and 'adjusted close' in df.columns and 'volume' in df.columns:
-            print('validate_columns success')
+            print('column names are good')
+        elif '1. open' in df.columns and '2. high' in df.columns and '3. low' in df.columns and '4. close' in df.columns \
+                and '5. adjusted close' in df.columns and '6. volume' in df.columns:
+            df.rename(columns={'1. open': 'open',
+                               '2. high': 'high',
+                               '3. low': 'low',
+                               '4. close': 'close',
+                               '5. adjusted close': 'adjusted close',
+                               '6. volume': 'volume'
+                               }, inplace=True)
         else:
             raise ValueError('DataFrame column names wrong')
 
-        if df.index.name == 'Date':
-            print('validate_columns index name is correct')
-        else:
-            raise ValueError('DataFrame index name wrong:' + df.index.name)
+        df.index = pd.to_datetime(df.index)
+        return df, meta_data
 
 
 # print two files, one for all candles

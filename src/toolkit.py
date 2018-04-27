@@ -6,6 +6,7 @@ import pandas as pd
 import os
 from datetime import datetime, timedelta
 from pytz import timezone
+import glob
 
 
 class Bootup:
@@ -294,3 +295,41 @@ def add_analysis_data(fulldf):
     fulldf["v_vs_long"] = fulldf['volume'] / fulldf[Metrics.VOL_LONG_MA_PREV]
 
     return fulldf
+
+
+def prepare_symbols(boot):
+    path = os.path.normpath(os.path.join(boot.base_path, '..', 'symbol'))
+    print(path)
+    df_input = pd.concat([pd.read_csv(filename) for filename in glob.glob(path + "/csv/*.csv")], axis=0)
+    df_input['Symbol'] = df_input['Symbol'].str.strip()
+    df_input = df_input[df_input['Symbol'] != '']
+    print('Number of symbols from input csv:', len(df_input.index))
+
+    # read in white
+    df_white = pd.read_csv(path + '/override/white.txt', header=None, names=['Symbol'])
+    df_white['Symbol'] = df_white['Symbol'].str.strip()
+    df_white['Symbol'] = df_white['Symbol'].str.upper()
+    df_white = df_white[df_white['Symbol'] != '']
+    print('Number of symbols from white list:', len(df_white.index))
+
+    # add white
+    df_full = pd.concat([df_input, df_white])
+    df_full.reset_index(drop=True, inplace=True)
+    print('Number of symbols combined:', len(df_full.index))
+
+    # remove black
+
+    # clean up
+    df_full['Symbol'] = df_full['Symbol'].str.strip()
+    df_full = df_full[df_full['Symbol'].str.match(r'^[a-zA-Z]+$')]
+    df_full = df_full[df_full['Symbol'].str.len() < 5]
+    df_full.sort_values(by=['Symbol', 'Name'], ascending=[True, True], inplace=True)
+    df_full.drop_duplicates(subset='Symbol', inplace=True)
+    print('Number of symbols combined after cleanup:', len(df_full.index))
+
+    # export
+    store_meta = HDFStore(boot.meta_file)
+    store_meta.put('Symbol', df_full)
+
+    df_full.to_csv(path + '/export/export.csv', columns=['Symbol', 'Name', 'industry'])
+    print('Export complete!')

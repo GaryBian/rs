@@ -5,6 +5,7 @@ import numpy
 import pandas as pd
 import os
 from datetime import datetime, timedelta
+from pytz import timezone
 
 
 class Bootup:
@@ -46,7 +47,7 @@ class AlphaVantageData:
             self.merge_and_add_to_store(symbol, data)
             print("complete download incremental data of:" + symbol)
             success_download_count += 1
-            if data.tail(1).index.date == datetime.today().date():
+            if data.tail(1).index.date == datetime.now(timezone('US/Eastern')).date():
                 up_to_today_count += 1
             time.sleep(1)
 

@@ -45,13 +45,16 @@ class AlphaVantageData:
         success_download_count = 0
         up_to_today_count = 0
         for symbol in symbols_to_increment:
-            data, meta_data = self.get_daily_adjusted(symbol, 'compact')
-            self.merge_and_add_to_store(symbol, data)
-            print("complete download incremental data of:" + symbol)
-            success_download_count += 1
-            if data.tail(1).index.date == datetime.now(timezone('US/Eastern')).date():
-                up_to_today_count += 1
             time.sleep(self.seconds_between_api_call)
+            try:
+                data, meta_data = self.get_daily_adjusted(symbol, 'compact')
+                self.merge_and_add_to_store(symbol, data)
+                print("complete download incremental data of:" + symbol)
+                success_download_count += 1
+                if data.tail(1).index.date == datetime.now(timezone('US/Eastern')).date():
+                    up_to_today_count += 1
+            except:
+                print("Error working on: " + symbol)
 
         self.audit()
         print('AlphaVantageData incremental update fully completed')
@@ -345,3 +348,9 @@ def prepare_symbols(boot):
 
     df_full.to_csv(path + '/export/export.csv', columns=['Symbol', 'Name', 'industry'])
     print('Export complete!')
+
+
+def read_symbols_meta_file(boot):
+    store_meta = HDFStore(boot.meta_file)
+    print(store_meta)
+    return store_meta['Symbol']['Symbol']

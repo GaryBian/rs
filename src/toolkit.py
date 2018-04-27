@@ -25,6 +25,7 @@ class AlphaVantageData:
         print('AlphaVantageData init')
         self.data_store_file = data_store_file
         self.max_gap_to_cover = 50
+        self.seconds_between_api_call = 3
         self.time_series = TimeSeries(key='EI7H5JUGQ20Q3GDK', output_format='pandas')
 
     def incremental_update(self):
@@ -49,7 +50,7 @@ class AlphaVantageData:
             success_download_count += 1
             if data.tail(1).index.date == datetime.now(timezone('US/Eastern')).date():
                 up_to_today_count += 1
-            time.sleep(1)
+            time.sleep(self.seconds_between_api_call)
 
         self.audit()
         print('AlphaVantageData incremental update fully completed')

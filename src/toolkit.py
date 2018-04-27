@@ -39,14 +39,23 @@ class AlphaVantageData:
         print("incremental_update number of symbols:" + str(len(symbols_to_increment)))
         data_store.close()
 
+        success_download_count = 0
+        up_to_today_count = 0
         for symbol in symbols_to_increment:
             data, meta_data = self.get_daily_adjusted(symbol, 'compact')
             self.merge_and_add_to_store(symbol, data)
             print("complete download incremental data of:" + symbol)
+            success_download_count += 1
+            if data.tail(1).index.date == datetime.today().date():
+                up_to_today_count += 1
             time.sleep(1)
 
         self.audit()
         print('AlphaVantageData incremental update fully completed')
+        print('Total symbols in store:' + str(len(symbols)))
+        print('Symbol qualify for increment:' + str(len(symbols_to_increment)))
+        print('success_download_count:' + str(success_download_count))
+        print('up_to_today_count:' + str(up_to_today_count))
 
     def merge_and_add_to_store(self, symbol, data):
         print('AlphaVantageData merge_and_add_to_store')

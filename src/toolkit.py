@@ -297,6 +297,13 @@ def add_analysis_data(fulldf):
     return fulldf
 
 
+# read all csv files from symbol\csv directory
+# http://www.nasdaq.com/screening/company-list.aspx
+# add in the white list
+# remove symbols with . - etc.
+# read black list from symbol\black\black.txt. remove all black
+
+# read all 3 csv
 def prepare_symbols(boot):
     path = os.path.normpath(os.path.join(boot.base_path, '..', 'symbol'))
     print(path)
@@ -318,6 +325,11 @@ def prepare_symbols(boot):
     print('Number of symbols combined:', len(df_full.index))
 
     # remove black
+    df_black = pd.read_csv(path + '/override/black.txt', header=None, names=['Symbol'])
+    df_black['Symbol'] = df_black['Symbol'].str.strip()
+    df_black['Symbol'] = df_black['Symbol'].str.upper()
+    df_black = df_black[df_black['Symbol'] != '']
+    print('Number of symbols from black list:', len(df_black.index))
 
     # clean up
     df_full['Symbol'] = df_full['Symbol'].str.strip()

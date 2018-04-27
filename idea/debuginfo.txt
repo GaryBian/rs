@@ -36,3 +36,10 @@ analysis['atr'] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf[
 analysis['atr_ema60'] = talib.EMA(numpy.asarray(analysis['atr']), 50)
 
 analysis['chg_calc_vs_atr'] = (analysis['close'] - analysis['close_prev']) / analysis['atr_ema60']
+
+
+
+http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=330&freq=1&ma=6&maval=8,21,200&mocktick=1&lf=268435456&startdate=10/14/2015&enddate=1/14/2016&symb=nnvc
+
+
+http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=330&freq=1&ma=6&maval=8,21,200&mocktick=1&lf=268435456&startdate=5/26/2017&enddate=7/26/2017&symb=ARWR

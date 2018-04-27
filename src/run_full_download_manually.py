@@ -12,6 +12,7 @@ vantage = toolkit.AlphaVantageData(boot.data_file)
 
 data_store = HDFStore(boot.data_file, mode='a')
 count = 0
+successcount = 0
 cutdate = datetime.datetime(2015, 1, 1)
 for s in df_symbols:
     try:
@@ -25,7 +26,8 @@ for s in df_symbols:
             print(len(df.index))
             if len(df.index) > 0:
                 data_store[s] = df
-                print(s + ' done')
+                successcount += 1
+                print(s + ' done ' + str(successcount))
     except:
         print("Error working on: " + s)
 

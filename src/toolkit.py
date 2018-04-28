@@ -39,6 +39,8 @@ class AlphaVantageData:
             lastrowindex = data_store[s].tail(1).index
             if lastrowindex > datetime.today() - timedelta(days=self.max_gap_to_cover):
                 symbols_to_increment.append(s)
+            else:
+                print(s)
         print("incremental_update number of symbols:" + str(len(symbols_to_increment)))
         data_store.close()
 

@@ -335,6 +335,11 @@ def prepare_symbols(boot):
     df_black['Symbol'] = df_black['Symbol'].str.upper()
     df_black = df_black[df_black['Symbol'] != '']
     print('Number of symbols from black list:', len(df_black.index))
+    print(df_full.shape)
+    for row in df_black['Symbol']:
+        df_full = df_full[df_full.Symbol != row]
+    print('after remove black')
+    print(df_full.shape)
 
     # clean up
     df_full['Symbol'] = df_full['Symbol'].str.strip()

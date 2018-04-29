@@ -317,14 +317,12 @@ def prepare_symbols(boot):
     df_input = df_input[df_input['Symbol'] != '']
     print('Number of symbols from input csv:', len(df_input.index))
 
-    # read in white
+    # add white
     df_white = pd.read_csv(path + '/override/white.txt', header=None, names=['Symbol'])
     df_white['Symbol'] = df_white['Symbol'].str.strip()
     df_white['Symbol'] = df_white['Symbol'].str.upper()
     df_white = df_white[df_white['Symbol'] != '']
     print('Number of symbols from white list:', len(df_white.index))
-
-    # add white
     df_full = pd.concat([df_input, df_white])
     df_full.reset_index(drop=True, inplace=True)
     print('Number of symbols combined:', len(df_full.index))

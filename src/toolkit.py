@@ -27,7 +27,7 @@ class AlphaVantageData:
         self.data_store_file = data_store_file
         self.max_gap_to_cover = 50
         self.seconds_between_api_call = 3
-        self.time_series = TimeSeries(key='EI7H5JUGQ20Q3GDK', output_format='pandas')
+        self.time_series = TimeSeries(key='EI7H5JUGQ20Q3GDK', retries=2, output_format='pandas')
 
     def incremental_update(self):
         print('AlphaVantageData incremental update')

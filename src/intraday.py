@@ -8,13 +8,15 @@ def run_one(symbol, hdf):
     toolkit.add_analysis_data(fulldf)
 
     date_range_eval = toolkit.DateRangeEval()
-    date_range_eval.set_start_end('2015-01-12', '2015-01-14')
+    date_range_eval.one_day('2018-04-30')
     vol_eval = toolkit.VolumeEval()
     for i, row in fulldf.iterrows():
         vol_eval.set(row)
-        print(row)
-        print(i)
-        print(date_range_eval.isin(i))
+        # print(row)
+        # print(i)
+        if date_range_eval.isin(i):
+            print(i)
+            print(symbol)
 
 
 boot = toolkit.Bootup()

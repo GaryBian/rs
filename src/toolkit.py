@@ -1,3 +1,4 @@
+import talib
 from alpha_vantage.timeseries import TimeSeries
 import time
 from pandas import HDFStore
@@ -158,6 +159,65 @@ class AlphaVantageData:
         df = df.filter(items=['open', 'high', 'low', 'close', 'adjusted close', 'volume'])
         df.index = pd.to_datetime(df.index)
         return df, meta_data
+
+
+class VolumeEval:
+    def __init__(self, ratio_to_short=2.0, ratio_to_long=1.5):
+        print('VolumeEval init')
+        self.ratio_to_short = ratio_to_short
+        self.ratio_to_long = ratio_to_long
+        #    (row['volume'] > row[Metrics.VOL_SHORT_MA_PREV] * times_short_vol) or (
+        #
+        #           row['volume'] > row[Metrics.VOL_LONG_MA_PREV] * times_long_vol)):
+
+    # verify the needed data exists
+    def set(self, row):
+        if 'volume' not in row.index:
+            raise ValueError('VolumeEval missing required data column ' + 'volume')
+
+        if Metrics.VOL_SHORT_MA_PREV not in row.index:
+            raise ValueError('VolumeEval missing required data column ' + Metrics.VOL_SHORT_MA_PREV)
+
+        if Metrics.VOL_LONG_MA_PREV not in row.index:
+            raise ValueError('VolumeEval missing required data column ' + Metrics.VOL_LONG_MA_PREV)
+
+        self.volume = row['volume']
+        self.short_ma = row[Metrics.VOL_SHORT_MA_PREV]
+        self.long_ma = row[Metrics.VOL_LONG_MA_PREV]
+
+
+class DateRangeEval:
+    def __init__(self):
+        print('DateRangeEval')
+
+    def set_start_end(self, start_date, end_date):
+        # start_date, end_date needs to be in format 2015-10-20
+        self.start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        self.end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        # if i > datetime.datetime(2016, 1, 1) and toolkit1.yang_candle_filter_vol(row):
+
+    def isin(self, d):
+        if d >= self.start_date and d <= self.end_date:
+            return True
+        else:
+            return False
+
+
+class Metrics:
+    VOL_SHORT_MA = 'VOL_SHORT_MA'
+    VOL_LONG_MA = 'VOL_LONG_MA'
+    VOL_SHORT_MA_PREV = 'VOL_SHORT_MA_PREV'
+    VOL_LONG_MA_PREV = 'VOL_LONG_MA_PREV'
+
+    CLOSE_PREV = 'CLOSE_PREV'
+    CHANGE = 'CHANGE'
+    CHANGE_PCT = 'CHANGE_PCT'
+    MA8 = 'MA8'
+    MA21 = 'MA21'
+    MA200 = 'MA200'
+
+    ATR = 'ATR'
+    ATR_SMOOTH = 'ATR_SMOOTH'
 
 
 # print two files, one for all candles
@@ -359,3 +419,31 @@ def read_symbols_meta_file(boot):
     store_meta = HDFStore(boot.meta_file)
     print(store_meta)
     return store_meta['Symbol']['Symbol']
+
+
+def add_analysis_data(fulldf):
+    # shift(1) is to get previous
+    # shift(-1) is to get next row
+
+    fulldf[Metrics.VOL_SHORT_MA] = talib.SMA(numpy.asarray(fulldf['volume']), 5)
+    fulldf[Metrics.VOL_SHORT_MA_PREV] = fulldf[Metrics.VOL_SHORT_MA].shift(1)
+    fulldf[Metrics.VOL_LONG_MA] = talib.EMA(numpy.asarray(fulldf['volume']), 50)
+    fulldf[Metrics.VOL_LONG_MA_PREV] = fulldf[Metrics.VOL_LONG_MA].shift(1)
+
+    fulldf[Metrics.MA8] = talib.EMA(numpy.asarray(fulldf['close']), 8)
+    fulldf[Metrics.MA21] = talib.EMA(numpy.asarray(fulldf['close']), 21)
+    fulldf[Metrics.MA200] = talib.EMA(numpy.asarray(fulldf['close']), 200)
+
+    fulldf[Metrics.CLOSE_PREV] = fulldf['close'].shift(1)
+    fulldf[Metrics.CHANGE] = fulldf['close'] - fulldf[Metrics.CLOSE_PREV]
+    fulldf[Metrics.CHANGE_PCT] = fulldf['close'].pct_change()
+
+    fulldf[Metrics.ATR] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf['low']),
+                                    numpy.asarray(fulldf['close']),
+                                    timeperiod=50)
+    fulldf[Metrics.ATR_SMOOTH] = talib.EMA(numpy.asarray(fulldf[Metrics.ATR]), 50)
+
+    fulldf["v_vs_short"] = fulldf['volume'] / fulldf[Metrics.VOL_SHORT_MA_PREV]
+    fulldf["v_vs_long"] = fulldf['volume'] / fulldf[Metrics.VOL_LONG_MA_PREV]
+
+    return fulldf

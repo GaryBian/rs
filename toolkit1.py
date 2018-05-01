@@ -123,31 +123,3 @@ def yang_candle_filter_vol(row):
         return True
 
     return False
-
-
-def add_analysis_data(fulldf):
-    # shift(1) is to get previous
-    # shift(-1) is to get next row
-
-    fulldf[Metrics.VOL_SHORT_MA] = talib.SMA(numpy.asarray(fulldf['volume']), 5)
-    fulldf[Metrics.VOL_SHORT_MA_PREV] = fulldf[Metrics.VOL_SHORT_MA].shift(1)
-    fulldf[Metrics.VOL_LONG_MA] = talib.EMA(numpy.asarray(fulldf['volume']), 50)
-    fulldf[Metrics.VOL_LONG_MA_PREV] = fulldf[Metrics.VOL_LONG_MA].shift(1)
-
-    fulldf[Metrics.MA8] = talib.EMA(numpy.asarray(fulldf['close']), 8)
-    fulldf[Metrics.MA21] = talib.EMA(numpy.asarray(fulldf['close']), 21)
-    fulldf[Metrics.MA200] = talib.EMA(numpy.asarray(fulldf['close']), 200)
-
-    fulldf[Metrics.CLOSE_PREV] = fulldf['close'].shift(1)
-    fulldf[Metrics.CHANGE] = fulldf['close'] - fulldf[Metrics.CLOSE_PREV]
-    fulldf[Metrics.CHANGE_PCT] = fulldf['close'].pct_change()
-
-    fulldf[Metrics.ATR] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf['low']),
-                                    numpy.asarray(fulldf['close']),
-                                    timeperiod=50)
-    fulldf[Metrics.ATR_SMOOTH] = talib.EMA(numpy.asarray(fulldf[Metrics.ATR]), 50)
-
-    fulldf["v_vs_short"] = fulldf['volume'] / fulldf[Metrics.VOL_SHORT_MA_PREV]
-    fulldf["v_vs_long"] = fulldf['volume'] / fulldf[Metrics.VOL_LONG_MA_PREV]
-
-    return fulldf

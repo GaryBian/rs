@@ -16,7 +16,8 @@ cutdate = datetime.datetime(2015, 1, 1)
 for s in df_symbols:
     try:
         count += 1
-        if count % 5 == 0:
+        # if count % 5 == 0:
+        if True:
             time.sleep(vantage.seconds_between_api_call)
             s = toolkit.AlphaVantageData.cleanse_symbol(s)
             df, meta = vantage.get_daily_adjusted(s, 'full')

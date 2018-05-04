@@ -4,7 +4,7 @@ import toolkit
 from toolkit import CandleStick
 
 
-def run_one(symbol, hdf):
+def run_one(symbol, hdf, boot):
     fulldf = hdf[symbol]
 
     date_range_eval = toolkit.DateRangeEval()
@@ -15,7 +15,7 @@ def run_one(symbol, hdf):
 
     for i, row in fulldf.iterrows():
         if date_range_eval.isin(i) and toolkit.yang_candle_filter_vol(row):
-            file_s = open("../candledata/" + symbol + "_candle_volselected.txt", "a")
+            file_s = open(boot.base_path + "/../candledata/" + symbol + "_candle_volselected.txt", "a+")
             c = CandleStick.fromRow(row)
             c.associate_date(i)
             file_s.write(c.describe2())
@@ -24,6 +24,7 @@ def run_one(symbol, hdf):
             file_s.write(" |V/LONG " + "{:0.1f}".format(row['volume'] / row[Metrics.VOL_LONG_MA_PREV]))
             file_s.write("\n")
             file_s.close()
+            print('found something for ' + symbol)
 
 
 boot = toolkit.Bootup()
@@ -31,7 +32,7 @@ hdf = HDFStore(boot.data_file)
 keys = hdf.keys()
 for symbol in keys:
     try:
-        run_one(symbol.strip('/'), hdf)
+        run_one(symbol.strip('/'), hdf, boot)
     except:
         print('Error on ' + symbol)
 hdf.close()

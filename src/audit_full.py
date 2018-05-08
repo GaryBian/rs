@@ -1,8 +1,6 @@
 import toolkit
-import datetime
-from pandas import HDFStore
 
 boot = toolkit.Bootup()
-vantage = toolkit.AlphaVantageData(boot.data_file)
+vantage = toolkit.AlphaVantageData(boot)
 
 vantage.audit_comprehensive()

@@ -186,6 +186,21 @@ class AlphaVantageData:
         print('Total number of symbols in data store:' + str(len(symbols)))
         return symbols
 
+    def audit_comprehensive(self):
+        # make sure all symbols in store has data
+        # return True if all passed audit
+        print('AlphaVantageData audit')
+        data_store = HDFStore(self.data_store_file, mode='r')
+        for symbol in data_store.keys():
+            df = data_store[symbol.strip('/')]
+            print(df.shape)
+            print(df.tail(1).index)
+            if df.count == 0:
+                return False
+        data_store.close()
+        print('no error found in audit')
+        return True
+
     def audit(self):
         # make sure all symbols in store has data
         # return True if all passed audit

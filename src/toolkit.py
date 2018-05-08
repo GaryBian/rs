@@ -126,7 +126,7 @@ class AlphaVantageData:
 
         success_download_count = 0
         up_to_today_count = 0
-        copy_read_only_per_count = 10
+        copy_read_only_per_count = 500
         for symbol in symbols_to_increment:
             time.sleep(self.seconds_between_api_call)
             try:

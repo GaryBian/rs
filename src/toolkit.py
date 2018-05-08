@@ -141,6 +141,7 @@ class AlphaVantageData:
                     copyfile(self.data_store_file, self.data_read_only_file)
             except:
                 print("Error working on: " + symbol)
+        copyfile(self.data_store_file, self.data_read_only_file)
 
         self.audit()
         print('AlphaVantageData incremental update fully completed')

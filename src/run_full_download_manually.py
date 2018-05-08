@@ -8,7 +8,7 @@ import datetime
 boot = toolkit.Bootup()
 print(boot)
 df_symbols = toolkit.read_symbols_meta_file(boot)
-vantage = toolkit.AlphaVantageData(boot.data_file)
+vantage = toolkit.AlphaVantageData(boot)
 
 count = 0
 successcount = 0

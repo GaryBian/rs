@@ -8,6 +8,7 @@ import os
 from datetime import datetime, timedelta
 from pytz import timezone
 import glob
+from shutil import copyfile
 
 
 class CandleStick:
@@ -74,8 +75,10 @@ class Bootup:
     def __init__(self):
         self.base_path = os.path.dirname(os.path.abspath(__file__))
         self.data_path = os.path.normpath(os.path.join(self.base_path, '..', 'data'))
+        self.data_read_path = os.path.normpath(os.path.join(self.base_path, '..', 'dataread'))
         self.data_file = os.path.normpath(os.path.join(self.data_path, 'daily.h5'))
         self.meta_file = os.path.normpath(os.path.join(self.data_path, 'meta.h5'))
+        self.data_read_only_file = os.path.normpath(os.path.join(self.data_read_path, 'readonly.h5'))
         print('boot up base path:' + self.base_path)
         print('boot up data path:' + self.data_path)
         print('boot up data file:' + self.data_file)
@@ -83,12 +86,28 @@ class Bootup:
 
 
 class AlphaVantageData:
-    def __init__(self, data_store_file):
+    def __init__(self, boot):
         print('AlphaVantageData init')
-        self.data_store_file = data_store_file
+        self.data_store_file = boot.data_file
+        self.data_read_only_file = boot.data_read_only_file
         self.max_gap_to_cover = 50
         self.seconds_between_api_call = 3
         self.time_series = TimeSeries(key='EI7H5JUGQ20Q3GDK', retries=2, output_format='pandas')
+
+    def symbols_to_increment(self):
+        print('AlphaVantageData symbols_to_increment')
+        symbols = self.all_symbols_in_store()
+        data_store = HDFStore(self.data_store_file, mode='r')
+        symbols_to_increment = []
+        for s in symbols:
+            lastrowindex = data_store[s].tail(1).index
+            if lastrowindex > datetime.today() - timedelta(days=self.max_gap_to_cover):
+                symbols_to_increment.append(s)
+            else:
+                print(s)
+        print("incremental_update number of symbols:" + str(len(symbols_to_increment)))
+        data_store.close()
+        return symbols_to_increment
 
     def incremental_update(self):
         print('AlphaVantageData incremental update')
@@ -107,6 +126,7 @@ class AlphaVantageData:
 
         success_download_count = 0
         up_to_today_count = 0
+        copy_read_only_per_count = 10
         for symbol in symbols_to_increment:
             time.sleep(self.seconds_between_api_call)
             try:
@@ -116,6 +136,9 @@ class AlphaVantageData:
                 success_download_count += 1
                 if data.tail(1).index.date == datetime.now(timezone('US/Eastern')).date():
                     up_to_today_count += 1
+                if success_download_count % copy_read_only_per_count == 0:
+                    print("copy to read only location")
+                    copyfile(self.data_store_file, self.data_read_only_file)
             except:
                 print("Error working on: " + symbol)
 

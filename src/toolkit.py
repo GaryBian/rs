@@ -630,3 +630,70 @@ class VolChangeSelector:
             result = True
 
         return result
+
+
+class CloseGreaterThanSelector:
+    # close price greater than
+    # usage: CloseGreaterThanSelector(1.5)
+    def __init__(self, greater_than=10):
+        self.greater_than = greater_than
+
+    def describe(self):
+        return "{}[{}]".format(type(self).__name__, self.greater_than)
+
+    def evaluate(self, row):
+        # return True if the condition met
+
+        result = False
+        if row['close'] >= self.greater_than:
+            result = True
+
+        return result
+
+
+class VolGreaterThanSelector:
+    # close price greater than
+    # usage: CloseGreaterThanSelector(1.5)
+    def __init__(self, greater_than=10000):
+        self.greater_than = greater_than
+
+    def describe(self):
+        return "{}[{}]".format(type(self).__name__, self.greater_than)
+
+    def evaluate(self, row):
+        # return True if the condition met
+        result = False
+        if row['volume'] >= self.greater_than:
+            result = True
+
+        return result
+
+
+class DateSelector:
+
+    # 0 param passed in: will be open to all date
+    # 1 param passed in: 1 day range, used as both start and end date
+    # 2 param passed in: start and end date
+    def __init__(self, *date_value):
+        print('DateSelector init')
+        print(date_value)
+        if len(date_value) == 0:
+            self.start = datetime.strptime('1980-01-01', '%Y-%m-%d')
+            self.end = datetime.strptime('2180-01-01', '%Y-%m-%d')
+        if len(date_value) == 1:
+            self.start = datetime.strptime(date_value[0], '%Y-%m-%d')
+            self.end = datetime.strptime(date_value[0], '%Y-%m-%d')
+        if len(date_value) == 2:
+            self.start = datetime.strptime(date_value[0], '%Y-%m-%d')
+            self.end = datetime.strptime(date_value[1], '%Y-%m-%d')
+
+    def describe(self):
+        return "{}[{},{}]".format(type(self).__name__, self.start, self.end)
+
+    def evaluate(self, datevalue):
+        # return True if the condition met
+        result = False
+        if datevalue >= self.start and datevalue <= self.end:
+            result = True
+
+        return result

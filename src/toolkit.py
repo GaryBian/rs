@@ -85,7 +85,6 @@ class Bootup:
         print('boot up meta_file:' + self.meta_file)
 
 
-<<<<<<< HEAD
 class DataView:
     def __init__(self, boot):
         print('DataFile init')
@@ -121,8 +120,6 @@ class DataView:
         return True
 
 
-=======
->>>>>>> parent of 6ac22c7... a
 class AlphaVantageData:
     def __init__(self, boot):
         print('AlphaVantageData init')

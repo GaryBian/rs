@@ -20,7 +20,7 @@ def run_one(symbol, hdf):
 
 
 boot = toolkit.Bootup()
-hdf = HDFStore(boot.data_file)
+hdf = HDFStore(boot.data_read_only_file)
 keys = hdf.keys()
 for symbol in keys:
     run_one(symbol.strip('/'), hdf)

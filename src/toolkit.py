@@ -83,6 +83,7 @@ class Bootup:
         print('boot up data path:' + self.data_path)
         print('boot up data file:' + self.data_file)
         print('boot up meta_file:' + self.meta_file)
+        print('boot up data_read_only_file:' + self.data_read_only_file)
 
 
 class DataView:
@@ -339,23 +340,6 @@ class DateRangeEval:
             return False
 
 
-class Metrics:
-    VOL_SHORT_MA = 'VOL_SHORT_MA'
-    VOL_LONG_MA = 'VOL_LONG_MA'
-    VOL_SHORT_MA_PREV = 'VOL_SHORT_MA_PREV'
-    VOL_LONG_MA_PREV = 'VOL_LONG_MA_PREV'
-
-    CLOSE_PREV = 'CLOSE_PREV'
-    CHANGE = 'CHANGE'
-    CHANGE_PCT = 'CHANGE_PCT'
-    MA8 = 'MA8'
-    MA21 = 'MA21'
-    MA200 = 'MA200'
-
-    ATR = 'ATR'
-    ATR_SMOOTH = 'ATR_SMOOTH'
-
-
 # print two files, one for all candles
 # one for selected only
 def print_candle_debug(symbol):
@@ -478,6 +462,7 @@ def add_analysis_data(fulldf):
     fulldf[Metrics.VOL_SHORT_MA_PREV] = fulldf[Metrics.VOL_SHORT_MA].shift(1)
     fulldf[Metrics.VOL_LONG_MA] = talib.EMA(numpy.asarray(fulldf['volume']), 50)
     fulldf[Metrics.VOL_LONG_MA_PREV] = fulldf[Metrics.VOL_LONG_MA].shift(1)
+    fulldf[Metrics.VOL_PREV] = fulldf['volume'].shift(1)
 
     fulldf[Metrics.MA8] = talib.EMA(numpy.asarray(fulldf['close']), 8)
     fulldf[Metrics.MA21] = talib.EMA(numpy.asarray(fulldf['close']), 21)
@@ -557,32 +542,51 @@ def read_symbols_meta_file(boot):
     return store_meta['Symbol']['Symbol']
 
 
-def add_analysis_data(fulldf):
+class Metrics:
+    vol_short_ma = 'vol_short_ma'
+    vol_long_ma = 'vol_long_ma'
+    vol_short_ma_prev = 'vol_short_ma_prev'
+    vol_long_ma_prev = 'vol_long_ma_prev'
+    vol_prev = 'vol_prev'
+
+    close_prev = 'close_prev'
+    change = 'change'
+    change_pct = 'change_pct'
+    ma8 = 'ma8'
+    ma21 = 'ma21'
+    ma200 = 'ma200'
+
+    atr = 'atr'
+    atr_smooth = 'atr_smooth'
+
+
+def add_analysis_data(df):
     # shift(1) is to get previous
     # shift(-1) is to get next row
 
-    fulldf[Metrics.VOL_SHORT_MA] = talib.SMA(numpy.asarray(fulldf['volume']), 5)
-    fulldf[Metrics.VOL_SHORT_MA_PREV] = fulldf[Metrics.VOL_SHORT_MA].shift(1)
-    fulldf[Metrics.VOL_LONG_MA] = talib.EMA(numpy.asarray(fulldf['volume']), 50)
-    fulldf[Metrics.VOL_LONG_MA_PREV] = fulldf[Metrics.VOL_LONG_MA].shift(1)
+    df[Metrics.vol_short_ma] = talib.SMA(numpy.asarray(df['volume']), 5)
+    df[Metrics.vol_long_ma] = talib.EMA(numpy.asarray(df['volume']), 50)
+    df[Metrics.vol_short_ma_prev] = df[Metrics.vol_short_ma].shift(1)
+    df[Metrics.vol_long_ma_prev] = df[Metrics.vol_long_ma].shift(1)
+    df[Metrics.vol_prev] = df['volume'].shift(1)
+    df["vol_vs_short_ma"] = df['volume'] / df[Metrics.vol_short_ma_prev]
+    df["vol_vs_long_ma"] = df['volume'] / df[Metrics.vol_long_ma_prev]
+    df["vol_vs_prev"] = df['volume'] / df[Metrics.vol_prev]
 
-    fulldf[Metrics.MA8] = talib.EMA(numpy.asarray(fulldf['close']), 8)
-    fulldf[Metrics.MA21] = talib.EMA(numpy.asarray(fulldf['close']), 21)
-    fulldf[Metrics.MA200] = talib.EMA(numpy.asarray(fulldf['close']), 200)
+    df[Metrics.ma8] = talib.EMA(numpy.asarray(df['close']), 8)
+    df[Metrics.ma21] = talib.EMA(numpy.asarray(df['close']), 21)
+    df[Metrics.ma200] = talib.EMA(numpy.asarray(df['close']), 200)
 
-    fulldf[Metrics.CLOSE_PREV] = fulldf['close'].shift(1)
-    fulldf[Metrics.CHANGE] = fulldf['close'] - fulldf[Metrics.CLOSE_PREV]
-    fulldf[Metrics.CHANGE_PCT] = fulldf['close'].pct_change()
+    df[Metrics.close_prev] = df['close'].shift(1)
+    df[Metrics.change] = df['close'] - df[Metrics.close_prev]
+    df[Metrics.change_pct] = df['close'].pct_change()
 
-    fulldf[Metrics.ATR] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf['low']),
-                                    numpy.asarray(fulldf['close']),
-                                    timeperiod=50)
-    fulldf[Metrics.ATR_SMOOTH] = talib.EMA(numpy.asarray(fulldf[Metrics.ATR]), 50)
+    df[Metrics.atr] = talib.ATR(numpy.asarray(df['high']), numpy.asarray(df['low']),
+                                numpy.asarray(df['close']),
+                                timeperiod=50)
+    df[Metrics.atr_smooth] = talib.EMA(numpy.asarray(df[Metrics.atr]), 50)
 
-    fulldf["v_vs_short"] = fulldf['volume'] / fulldf[Metrics.VOL_SHORT_MA_PREV]
-    fulldf["v_vs_long"] = fulldf['volume'] / fulldf[Metrics.VOL_LONG_MA_PREV]
-
-    return fulldf
+    return df
 
 
 def yang_candle_filter_vol(row):
@@ -602,3 +606,27 @@ def yang_candle_filter_vol(row):
         return True
 
     return False
+
+
+class VolChangeSelector:
+    # volume change selector
+    # usage: VolChangeSelector(1.5, 1.5, 1.5)
+    def __init__(self, vol_vs_prev=10, vol_vs_short_ma=10, vol_vs_long_ma=10):
+        self.vol_vs_prev = vol_vs_prev
+        self.vol_vs_short_ma = vol_vs_short_ma
+        self.vol_vs_long_ma = vol_vs_long_ma
+
+    def describe(self):
+        return "{}[{},{},{}]".format(type(self).__name__, self.vol_vs_prev, self.vol_vs_short_ma,
+                                     self.vol_vs_long_ma)
+
+    def evaluate(self, row):
+        # return True if the condition met
+
+        result = False
+        if row['volume'] / row[Metrics.vol_prev] > self.vol_vs_prev or row['volume'] / row[
+            Metrics.vol_short_ma_prev] > self.vol_vs_short_ma or row['volume'] / row[
+            Metrics.vol_long_ma_prev] > self.vol_vs_long_ma:
+            result = True
+
+        return result

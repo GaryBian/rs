@@ -85,6 +85,44 @@ class Bootup:
         print('boot up meta_file:' + self.meta_file)
 
 
+<<<<<<< HEAD
+class DataView:
+    def __init__(self, boot):
+        print('DataFile init')
+        self.data_store_file = boot.data_file
+        self.data_read_only_file = boot.data_read_only_file
+        self.master_symbols = ['SPY', 'QQQ', 'AAPL']
+
+    def latest_data_date(self):
+        data_store = HDFStore(self.data_read_only_file, mode='r')
+        latest = []
+        for s in self.master_symbols:
+            print(s + ":" + str(data_store[s].tail(1).index.date[0]))
+            latest.append(data_store[s].tail(1).index.date[0])
+            if len(set(latest)) > 1:
+                raise ValueError('latest data date does not agree with each other:' + str(latest))
+        data_store.close()
+        print(latest)
+        return latest[0]
+
+    def audit_comprehensive(self):
+        # make sure all symbols in store has data
+        # return True if all passed audit
+        print('DataView audit_comprehensive')
+        data_store = HDFStore(self.data_store_file, mode='r')
+        for symbol in data_store.keys():
+            df = data_store[symbol.strip('/')]
+            print(df.shape)
+            print(df.tail(1).index)
+            if df.count == 0:
+                return False
+        data_store.close()
+        print('no error found in audit')
+        return True
+
+
+=======
+>>>>>>> parent of 6ac22c7... a
 class AlphaVantageData:
     def __init__(self, boot):
         print('AlphaVantageData init')

@@ -584,7 +584,10 @@ def add_analysis_data(df):
     df[Metrics.atr] = talib.ATR(numpy.asarray(df['high']), numpy.asarray(df['low']),
                                 numpy.asarray(df['close']),
                                 timeperiod=50)
-    df[Metrics.atr_smooth] = talib.EMA(numpy.asarray(df[Metrics.atr]), 50)
+    try:
+        df[Metrics.atr_smooth] = talib.EMA(numpy.asarray(df[Metrics.atr]), 50)
+    except:
+        print("can not calculate ATR smooth")
 
     return df
 
@@ -646,6 +649,25 @@ class CloseGreaterThanSelector:
 
         result = False
         if row['close'] >= self.greater_than:
+            result = True
+
+        return result
+
+
+class ChangeGreaterThanSelector:
+    # close price change pct greater than
+    # usage: ChangeGreaterThanSelector(0.05) for 5%
+    def __init__(self, greater_than=0.01):
+        self.greater_than = greater_than
+
+    def describe(self):
+        return "{}[{}]".format(type(self).__name__, self.greater_than)
+
+    def evaluate(self, row):
+        # return True if the condition met
+
+        result = False
+        if row['change_pct'] >= self.greater_than:
             result = True
 
         return result

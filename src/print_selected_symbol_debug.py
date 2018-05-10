@@ -10,10 +10,13 @@ def run_one(symbol, hdf):
     df = toolkit.DataView.add_analysis_data(df)
     file_s = open("../candledata/" + symbol + "_candle_volselected.txt", "w")
     for i, row in df.iterrows():
-        file_s.write(" |Date " + i.strftime('%Y-%m-%d'))
-        file_s.write(" |Bull " + "{:0.1f}".format(row['candle_bull']))
-        file_s.write(" |H/Body " + "{:0.1f}".format(row['candle_head_bi_body']))
+        file_s.write("" + i.strftime('%Y-%m-%d'))
+        file_s.write("|" + ('NIU' if row['candle_bull'] else 'RED'))
+        file_s.write("|H/Body " + "{:0.1f}".format(row['candle_head_bi_body']))
         file_s.write(" |T/Body " + "{:0.1f}".format(row['candle_tail_bi_body']))
+
+        file_s.write(" |CHG_PCT " + "{:0.1f}".format(100.0 * row['change_pct']))
+        file_s.write(" |CHG/ATR " + "{:0.1f}".format(row['change'] / row['atr_smooth']))
 
         file_s.write(" |B/ATR " + "{:0.1f}".format(row['candle_body_bi_atr']))
         file_s.write(" |V/SHORT " + "{:0.1f}".format(row['vol_bi_short_ma']))
@@ -27,6 +30,9 @@ boot = toolkit.Bootup()
 hdf = HDFStore(boot.data_read_only_file)
 
 keys = hdf.keys()
-for symbol in keys:
-    run_one(symbol.strip('/'), hdf)
+
+# for symbol in keys:
+#   run_one(symbol.strip('/'), hdf)
+
+run_one('AUMN', hdf)
 hdf.close()

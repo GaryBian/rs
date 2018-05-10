@@ -126,24 +126,24 @@ class DataView:
 
     @staticmethod
     def candle(df):
-        df['candle_body'] = df.close - df.open
-        if df['candle_body'] == 0.0:
-            df['candle_body'] = 0.01
-
-        if df['candle_body'] >= 0.0:
+        if df.close > df.open:
             df['candle_body_top'] = df.close
             df['candle_body_bottom'] = df.open
+            df['candle_bull'] = True
         else:
             df['candle_body_top'] = df.open
             df['candle_body_bottom'] = df.close
+            df['candle_bull'] = False
 
-        df['candle_body_abs'] = abs(df['candle_body'])
+        df['candle_body'] = abs(df.close - df.open)
+        if df['candle_body'] == 0.0:
+            df['candle_body'] = 0.01
+
         df['candle_head'] = df.high - df['candle_body_top']
         df['candle_tail'] = df['candle_body_bottom'] - df.low
-        df['candle_head_bi_body'] = df['candle_head'] / df['candle_body_abs']
-        df['candle_tail_bi_body'] = df['candle_tail'] / df['candle_body_abs']
-        df['candle_body_bi_atr'] = df['candle_body_abs'] / df[Metrics.atr_smooth]
-
+        df['candle_head_bi_body'] = df['candle_head'] / df['candle_body']
+        df['candle_tail_bi_body'] = df['candle_tail'] / df['candle_body']
+        df['candle_body_bi_atr'] = df['candle_body'] / df[Metrics.atr_smooth]
         return df
 
     @staticmethod
@@ -156,9 +156,9 @@ class DataView:
         df[Metrics.vol_short_ma_prev] = df[Metrics.vol_short_ma].shift(1)
         df[Metrics.vol_long_ma_prev] = df[Metrics.vol_long_ma].shift(1)
         df[Metrics.vol_prev] = df['volume'].shift(1)
-        df["vol_vs_short_ma"] = df['volume'] / df[Metrics.vol_short_ma_prev]
-        df["vol_vs_long_ma"] = df['volume'] / df[Metrics.vol_long_ma_prev]
-        df["vol_vs_prev"] = df['volume'] / df[Metrics.vol_prev]
+        df["vol_bi_short_ma"] = df['volume'] / df[Metrics.vol_short_ma_prev]
+        df["vol_bi_long_ma"] = df['volume'] / df[Metrics.vol_long_ma_prev]
+        df["vol_bi_prev"] = df['volume'] / df[Metrics.vol_prev]
 
         df[Metrics.ma8] = talib.EMA(numpy.asarray(df['close']), 8)
         df[Metrics.ma21] = talib.EMA(numpy.asarray(df['close']), 21)
@@ -177,7 +177,7 @@ class DataView:
             print("can not calculate ATR smooth")
 
         df = df.apply(DataView.candle, axis=1)
-        df['candle_body_abs_prev'] = df['candle_body_abs'].shift(1)
+        df['candle_body_prev'] = df['candle_body'].shift(1)
 
         return df
 

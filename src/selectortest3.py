@@ -3,7 +3,7 @@ from pandas import HDFStore
 import suite
 
 combo = suite.ComboHighVolume()
-combo.date_selector = toolkit.DateSelector('2018-05-03', '2019-01-01')
+combo.date_selector = toolkit.DateSelector('2018-05-02', '2018-05-02')
 
 boot = toolkit.Bootup()
 hdf = HDFStore(boot.data_read_only_file)

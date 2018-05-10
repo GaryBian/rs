@@ -39,7 +39,7 @@ class CandleStick:
         self.tail_to_body_ratio = self.tail / self.body
 
     def describe(self):
-        if (self.is_bull):
+        if self.is_bull:
             print("BULL")
         else:
             print("BEAR")
@@ -69,6 +69,10 @@ class CandleStick:
     @classmethod
     def fromRow(cls, row):
         return cls(row.open, row.high, row.low, row.close)
+
+    @classmethod
+    def add_candle_analysis(cls, row):
+        cls(row.open, row.high, row.low, row.close)
 
 
 class Bootup:
@@ -119,6 +123,63 @@ class DataView:
         data_store.close()
         print('no error found in audit')
         return True
+
+    @staticmethod
+    def candle(df):
+        df['candle_body'] = df.close - df.open
+        if df['candle_body'] == 0.0:
+            df['candle_body'] = 0.01
+
+        if df['candle_body'] >= 0.0:
+            df['candle_body_top'] = df.close
+            df['candle_body_bottom'] = df.open
+        else:
+            df['candle_body_top'] = df.open
+            df['candle_body_bottom'] = df.close
+
+        df['candle_body_abs'] = abs(df['candle_body'])
+        df['candle_head'] = df.high - df['candle_body_top']
+        df['candle_tail'] = df['candle_body_bottom'] - df.low
+        df['candle_head_bi_body'] = df['candle_head'] / df['candle_body_abs']
+        df['candle_tail_bi_body'] = df['candle_tail'] / df['candle_body_abs']
+        df['candle_body_bi_atr'] = df['candle_body_abs'] / df[Metrics.atr_smooth]
+
+        return df
+
+    @staticmethod
+    def add_analysis_data(df):
+        # shift(1) is to get previous
+        # shift(-1) is to get next row
+
+        df[Metrics.vol_short_ma] = talib.SMA(numpy.asarray(df['volume']), 5)
+        df[Metrics.vol_long_ma] = talib.EMA(numpy.asarray(df['volume']), 50)
+        df[Metrics.vol_short_ma_prev] = df[Metrics.vol_short_ma].shift(1)
+        df[Metrics.vol_long_ma_prev] = df[Metrics.vol_long_ma].shift(1)
+        df[Metrics.vol_prev] = df['volume'].shift(1)
+        df["vol_vs_short_ma"] = df['volume'] / df[Metrics.vol_short_ma_prev]
+        df["vol_vs_long_ma"] = df['volume'] / df[Metrics.vol_long_ma_prev]
+        df["vol_vs_prev"] = df['volume'] / df[Metrics.vol_prev]
+
+        df[Metrics.ma8] = talib.EMA(numpy.asarray(df['close']), 8)
+        df[Metrics.ma21] = talib.EMA(numpy.asarray(df['close']), 21)
+        df[Metrics.ma200] = talib.EMA(numpy.asarray(df['close']), 200)
+
+        df[Metrics.close_prev] = df['close'].shift(1)
+        df[Metrics.change] = df['close'] - df[Metrics.close_prev]
+        df[Metrics.change_pct] = df['close'].pct_change()
+
+        df[Metrics.atr] = talib.ATR(numpy.asarray(df['high']), numpy.asarray(df['low']),
+                                    numpy.asarray(df['close']),
+                                    timeperiod=50)
+        try:
+            df[Metrics.atr_smooth] = talib.EMA(numpy.asarray(df[Metrics.atr]), 50)
+        except:
+            print("can not calculate ATR smooth")
+
+        df = df.apply(DataView.candle, axis=1)
+        df['candle_body_abs_prev'] = df['candle_body_abs'].shift(1)
+
+        return df
 
 
 class AlphaVantageData:
@@ -454,35 +515,6 @@ def yang_candle_filter_vol(row):
     return False
 
 
-def add_analysis_data(fulldf):
-    # shift(1) is to get previous
-    # shift(-1) is to get next row
-
-    fulldf[Metrics.VOL_SHORT_MA] = talib.SMA(numpy.asarray(fulldf['volume']), 5)
-    fulldf[Metrics.VOL_SHORT_MA_PREV] = fulldf[Metrics.VOL_SHORT_MA].shift(1)
-    fulldf[Metrics.VOL_LONG_MA] = talib.EMA(numpy.asarray(fulldf['volume']), 50)
-    fulldf[Metrics.VOL_LONG_MA_PREV] = fulldf[Metrics.VOL_LONG_MA].shift(1)
-    fulldf[Metrics.VOL_PREV] = fulldf['volume'].shift(1)
-
-    fulldf[Metrics.MA8] = talib.EMA(numpy.asarray(fulldf['close']), 8)
-    fulldf[Metrics.MA21] = talib.EMA(numpy.asarray(fulldf['close']), 21)
-    fulldf[Metrics.MA200] = talib.EMA(numpy.asarray(fulldf['close']), 200)
-
-    fulldf[Metrics.CLOSE_PREV] = fulldf['close'].shift(1)
-    fulldf[Metrics.CHANGE] = fulldf['close'] - fulldf[Metrics.CLOSE_PREV]
-    fulldf[Metrics.CHANGE_PCT] = fulldf['close'].pct_change()
-
-    fulldf[Metrics.ATR] = talib.ATR(numpy.asarray(fulldf['high']), numpy.asarray(fulldf['low']),
-                                    numpy.asarray(fulldf['close']),
-                                    timeperiod=50)
-    fulldf[Metrics.ATR_SMOOTH] = talib.EMA(numpy.asarray(fulldf[Metrics.ATR]), 50)
-
-    fulldf["v_vs_short"] = fulldf['volume'] / fulldf[Metrics.VOL_SHORT_MA_PREV]
-    fulldf["v_vs_long"] = fulldf['volume'] / fulldf[Metrics.VOL_LONG_MA_PREV]
-
-    return fulldf
-
-
 # read all csv files from symbol\csv directory
 # http://www.nasdaq.com/screening/company-list.aspx
 # add in the white list
@@ -558,38 +590,6 @@ class Metrics:
 
     atr = 'atr'
     atr_smooth = 'atr_smooth'
-
-
-def add_analysis_data(df):
-    # shift(1) is to get previous
-    # shift(-1) is to get next row
-
-    df[Metrics.vol_short_ma] = talib.SMA(numpy.asarray(df['volume']), 5)
-    df[Metrics.vol_long_ma] = talib.EMA(numpy.asarray(df['volume']), 50)
-    df[Metrics.vol_short_ma_prev] = df[Metrics.vol_short_ma].shift(1)
-    df[Metrics.vol_long_ma_prev] = df[Metrics.vol_long_ma].shift(1)
-    df[Metrics.vol_prev] = df['volume'].shift(1)
-    df["vol_vs_short_ma"] = df['volume'] / df[Metrics.vol_short_ma_prev]
-    df["vol_vs_long_ma"] = df['volume'] / df[Metrics.vol_long_ma_prev]
-    df["vol_vs_prev"] = df['volume'] / df[Metrics.vol_prev]
-
-    df[Metrics.ma8] = talib.EMA(numpy.asarray(df['close']), 8)
-    df[Metrics.ma21] = talib.EMA(numpy.asarray(df['close']), 21)
-    df[Metrics.ma200] = talib.EMA(numpy.asarray(df['close']), 200)
-
-    df[Metrics.close_prev] = df['close'].shift(1)
-    df[Metrics.change] = df['close'] - df[Metrics.close_prev]
-    df[Metrics.change_pct] = df['close'].pct_change()
-
-    df[Metrics.atr] = talib.ATR(numpy.asarray(df['high']), numpy.asarray(df['low']),
-                                numpy.asarray(df['close']),
-                                timeperiod=50)
-    try:
-        df[Metrics.atr_smooth] = talib.EMA(numpy.asarray(df[Metrics.atr]), 50)
-    except:
-        print("can not calculate ATR smooth")
-
-    return df
 
 
 def yang_candle_filter_vol(row):

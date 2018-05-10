@@ -17,10 +17,12 @@ print(vg.describe())
 
 boot = toolkit.Bootup()
 hdf = HDFStore(boot.data_read_only_file)
-df = hdf['ADSK']
+df = hdf['CRC']
 print(df.shape)
 
-toolkit.add_analysis_data(df)
+# toolkit.add_analysis_data(df)
+
+toolkit.DataView.add_analysis_data(df)
 
 for i, row in df.iterrows():
     print(v.evaluate(row))

@@ -7,4 +7,4 @@ boot = toolkit.Bootup()
 
 dv = toolkit.DataView(boot)
 
-dv.latest_data_date()
+print(dv.latest_data_date())

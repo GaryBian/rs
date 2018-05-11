@@ -17,6 +17,7 @@ df_symbols = [
     'GSM',
     'HEI',
     'STRA',
+	'KOSS',
     'MXC',
     'CRC']
 vantage = toolkit.AlphaVantageData(boot)

@@ -144,6 +144,8 @@ class DataView:
         df['candle_head_bi_body'] = df['candle_head'] / df['candle_body']
         df['candle_tail_bi_body'] = df['candle_tail'] / df['candle_body']
         df['candle_body_bi_atr'] = df['candle_body'] / df[Metrics.atr_smooth]
+        # df['candle_noise_bi_atr'] = (df['candle_head'] + df['candle_tail']) / df[Metrics.atr_smooth]
+        df['candle_noise_bi_atr'] = abs(df.high - df.low) / df['candle_body']
         return df
 
     @staticmethod
@@ -178,6 +180,7 @@ class DataView:
 
         df = df.apply(DataView.candle, axis=1)
         df['candle_body_prev'] = df['candle_body'].shift(1)
+        df['candle_noise_bi_atr_ma'] = talib.EMA(numpy.asarray(df['candle_noise_bi_atr']), 50)
 
         return df
 

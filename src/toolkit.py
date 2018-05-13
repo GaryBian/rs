@@ -185,6 +185,7 @@ class DataView:
         try:
             df[Metrics.atr_smooth] = talib.EMA(numpy.asarray(df[Metrics.atr]), 50)
         except:
+            df[Metrics.atr_smooth] = float('NaN')
             print("can not calculate ATR smooth")
 
         df = df.apply(DataView.candle, axis=1)

@@ -10,7 +10,7 @@ combo.date_selector = toolkit.DateSelector('2018-05-01', '2018-06-10')
 
 boot = toolkit.Bootup()
 run_label = boot.start_est_time.strftime("%Y%m%d%H%M")
-
+print("select run:" + run_label)
 os.makedirs("../candledata/" + run_label + "/")
 
 hdf = HDFStore(boot.data_read_only_file)
@@ -23,8 +23,8 @@ for symbol in keys:
     hdf = HDFStore(boot.data_read_only_file)
     df = hdf[symbol]
     hdf.close()
-    df = toolkit.DataView.add_analysis_data(df)
     print("working on:" + symbol)
+    df = toolkit.DataView.add_analysis_data(df)
     for i, row in df.iterrows():
         if combo.query(i, row):
             print(i)

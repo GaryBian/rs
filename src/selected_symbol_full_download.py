@@ -8,18 +8,7 @@ import datetime
 boot = toolkit.Bootup()
 print(boot)
 df_symbols = [
-    'AUMN',
-    'TZOO',
-    'PODD',
-    'ECOM',
-    'NVDA',
-    'PRAA',
-    'GSM',
-    'HEI',
-    'STRA',
-	'KOSS',
-    'MXC',
-    'CRC']
+    'AGMH']
 vantage = toolkit.AlphaVantageData(boot)
 
 count = 0

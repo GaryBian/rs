@@ -1,0 +1,1 @@
+2018-05-03|NIU|H/Body 1.20 |T/Body 0.60 |CHG_PCT 4.1 |CHG/ATR 0.6 |B/CHG 0.83 |B/ATR 0.5 |V/LONG 2.0 |V/SHORT 3.7 |V/PREV 3.3 |O 7.3 |H 7.8 |L 7.2 |C 7.5 |V 1 Million

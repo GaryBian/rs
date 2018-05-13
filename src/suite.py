@@ -54,6 +54,7 @@ class ComboBasic:
     def __init__(self):
         print("create combo 1")
         self.basic_selectors = []
+        self.basic_selectors.append(toolkit.CloseGreaterThanSelector(greater_than=1))
         self.basic_selectors.append(toolkit.GenericGreaterThanSelector(column_name='change_pct', greater_than=0.03))
         self.basic_selectors.append(toolkit.GenericGreaterThanSelector(column_name='vol_bi_short_ma', greater_than=2))
         self.basic_selectors.append(toolkit.GenericGreaterThanSelector(column_name='vol_bi_long_ma', greater_than=1.5))

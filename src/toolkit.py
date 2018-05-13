@@ -754,7 +754,7 @@ class VolGreaterThanSelector:
 
 class CandleBullSelector:
     # candle bull
-    # usage: CloseGreaterThanSelector(1.5)
+    # usage: CandleBullSelector()
     def __init__(self):
         print(CandleBullSelector)
 

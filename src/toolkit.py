@@ -1,3 +1,4 @@
+import math
 import talib
 from alpha_vantage.timeseries import TimeSeries
 import time
@@ -83,6 +84,7 @@ class Bootup:
         self.data_file = os.path.normpath(os.path.join(self.data_path, 'daily.h5'))
         self.meta_file = os.path.normpath(os.path.join(self.data_path, 'meta.h5'))
         self.data_read_only_file = os.path.normpath(os.path.join(self.data_read_path, 'readonly.h5'))
+        self.start_est_time = datetime.now(timezone('US/Eastern'))
         print('boot up base path:' + self.base_path)
         print('boot up data path:' + self.data_path)
         print('boot up data file:' + self.data_file)
@@ -123,6 +125,13 @@ class DataView:
         data_store.close()
         print('no error found in audit')
         return True
+
+    @staticmethod
+    def millify(n):
+        millnames = ['', ' Thousand', ' Million', ' Billion', ' Trillion']
+        millidx = max(0, min(len(millnames) - 1,
+                             int(math.floor(0 if n == 0 else math.log10(abs(n)) / 3))))
+        return '{:.0f}{}'.format(n / 10 ** (3 * millidx), millnames[millidx])
 
     @staticmethod
     def candle(df):
@@ -183,6 +192,31 @@ class DataView:
         df['candle_noise_bi_atr_ma'] = talib.EMA(numpy.asarray(df['candle_noise_bi_atr']), 50)
 
         return df
+
+    @staticmethod
+    def write_query_result(symbol, dt, row, run_label):
+        file_s = open("../candledata/" + run_label + "/" + symbol + "_candle_selected.txt", "a")
+        file_s.write("" + dt.strftime('%Y-%m-%d'))
+        file_s.write("|" + ('NIU' if row['candle_bull'] else 'RED'))
+        file_s.write("|H/Body " + "{:0.2f}".format(row['candle_head_bi_body']))
+        file_s.write(" |T/Body " + "{:0.2f}".format(row['candle_tail_bi_body']))
+
+        file_s.write(" |CHG_PCT " + "{:0.1f}".format(100.0 * row['change_pct']))
+        file_s.write(" |CHG/ATR " + "{:0.1f}".format(row['change'] / row['atr_smooth']))
+        file_s.write(" |B/CHG " + "{:0.2f}".format(row['candle_body'] / row['change']))
+
+        file_s.write(" |B/ATR " + "{:0.1f}".format(row['candle_body_bi_atr']))
+        file_s.write(" |V/LONG " + "{:0.1f}".format(row['vol_bi_long_ma']))
+        file_s.write(" |V/SHORT " + "{:0.1f}".format(row['vol_bi_short_ma']))
+        file_s.write(" |V/PREV " + "{:0.1f}".format(row['vol_bi_prev']))
+        file_s.write(" |O " + "{:0.1f}".format(row['open']))
+        file_s.write(" |H " + "{:0.1f}".format(row['high']))
+        file_s.write(" |L " + "{:0.1f}".format(row['low']))
+        file_s.write(" |C " + "{:0.1f}".format(row['close']))
+        file_s.write(" |V " + DataView.millify(row['volume']))
+
+        file_s.write("\n")
+        file_s.close()
 
 
 class AlphaVantageData:
@@ -689,6 +723,25 @@ class VolGreaterThanSelector:
         # return True if the condition met
         result = False
         if row['volume'] >= self.greater_than:
+            result = True
+
+        return result
+
+
+class GenericGreaterThanSelector:
+    # close price greater than
+    # usage: CloseGreaterThanSelector(1.5)
+    def __init__(self, column_name, greater_than=10000):
+        self.column_name = column_name
+        self.greater_than = greater_than
+
+    def describe(self):
+        return "{}[{},{}]".format(type(self).__name__, self.column_name, self.greater_than)
+
+    def evaluate(self, row):
+        # return True if the condition met
+        result = False
+        if row[self.column_name] >= self.greater_than:
             result = True
 
         return result

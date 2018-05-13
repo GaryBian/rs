@@ -1,2 +1,0 @@
-2016-08-03 | Bull | 23.46 / 6.3% | HEAD 16% | TAIL 0% |B/ATR 1.7 |V/SHORT 2.3 |V/LONG 3.0
-2017-11-30 | Bull | 14.62 / 13.4% | HEAD 13% | TAIL 0% |B/ATR 4.6 |V/SHORT 2.2 |V/LONG 3.2

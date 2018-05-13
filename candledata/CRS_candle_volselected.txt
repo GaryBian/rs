@@ -1,2 +1,0 @@
-2014-10-23 | Bull | 49.98 / 8.7% | HEAD 11% | TAIL 12% |B/ATR 3.6 |V/SHORT 2.9 |V/LONG 2.7
-2015-04-06 | Bull | 38.3 / 5.7% | HEAD 4% | TAIL 0% |B/ATR 1.6 |V/SHORT 1.3 |V/LONG 2.1

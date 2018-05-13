@@ -162,16 +162,16 @@ class DataView:
         # shift(1) is to get previous
         # shift(-1) is to get next row
 
-        df[Metrics.vol_short_ma] = talib.SMA(numpy.asarray(df['volume']), 5)
-        df[Metrics.vol_long_ma] = talib.EMA(numpy.asarray(df['volume']), 50)
-        df[Metrics.vol_short_ma_prev] = df[Metrics.vol_short_ma].shift(1)
-        df[Metrics.vol_long_ma_prev] = df[Metrics.vol_long_ma].shift(1)
-        df[Metrics.vol_prev] = df['volume'].shift(1)
-        df["vol_bi_short_ma"] = df['volume'] / df[Metrics.vol_short_ma_prev]
-        df["vol_bi_long_ma"] = df['volume'] / df[Metrics.vol_long_ma_prev]
-        df["vol_bi_prev"] = df['volume'] / df[Metrics.vol_prev]
+        df[DataView.vol_short_ma] = talib.SMA(numpy.asarray(df['volume']), 5)
+        df[DataView.vol_long_ma] = talib.EMA(numpy.asarray(df['volume']), 50)
+        df[DataView.vol_short_ma_prev] = df[DataView.vol_short_ma].shift(1)
+        df[DataView.vol_long_ma_prev] = df[DataView.vol_long_ma].shift(1)
+        df[DataView.vol_prev] = df['volume'].shift(1)
+        df[DataView.vol_bi_short_ma] = df['volume'] / df[DataView.vol_short_ma_prev]
+        df[DataView.vol_bi_long_ma] = df['volume'] / df[DataView.vol_long_ma_prev]
+        df[DataView.vol_bi_prev] = df['volume'] / df[DataView.vol_prev]
 
-        df[Metrics.ma8] = talib.EMA(numpy.asarray(df['close']), 8)
+        df[DataView.ma8] = talib.EMA(numpy.asarray(df['close']), 8)
         df[Metrics.ma21] = talib.EMA(numpy.asarray(df['close']), 21)
         df[Metrics.ma200] = talib.EMA(numpy.asarray(df['close']), 200)
 
@@ -218,6 +218,23 @@ class DataView:
 
         file_s.write("\n")
         file_s.close()
+
+    vol_short_ma = 'vol_short_ma'
+    vol_long_ma = 'vol_long_ma'
+    vol_short_ma_prev = 'vol_short_ma_prev'
+    vol_long_ma_prev = 'vol_long_ma_prev'
+    vol_prev = 'vol_prev'
+    vol_bi_short_ma = 'vol_bi_short_ma'
+    vol_bi_long_ma = 'vol_bi_long_ma'
+    vol_bi_prev = 'vol_bi_prev'
+    close_prev = 'close_prev'
+    change = 'change'
+    change_pct = 'change_pct'
+    ma8 = 'ma8'
+    ma21 = 'ma21'
+    ma200 = 'ma200'
+    atr = 'atr'
+    atr_smooth = 'atr_smooth'
 
 
 class AlphaVantageData:

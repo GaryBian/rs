@@ -138,11 +138,11 @@ class DataView:
         if df.close > df.open:
             df['candle_body_top'] = df.close
             df['candle_body_bottom'] = df.open
-            df['candle_bull'] = True
+            df[DataView.candle_bull] = True
         else:
             df['candle_body_top'] = df.open
             df['candle_body_bottom'] = df.close
-            df['candle_bull'] = False
+            df[DataView.candle_bull] = False
 
         df['candle_body'] = abs(df.close - df.open)
         if df['candle_body'] == 0.0:
@@ -196,7 +196,7 @@ class DataView:
 
     @staticmethod
     def write_query_result(symbol, dt, row, run_label):
-        file_s = open("../candledata/" + run_label + "/" + symbol + "_candle_selected.txt", "a")
+        file_s = open("../candledata/" + run_label + "/" + symbol + "_candle_selected.html", "a")
         file_s.write("" + dt.strftime('%Y-%m-%d'))
         file_s.write("|" + ('NIU' if row['candle_bull'] else 'RED'))
         file_s.write("|H/Body " + "{:0.2f}".format(row['candle_head_bi_body']))
@@ -216,7 +216,11 @@ class DataView:
         file_s.write(" |C " + "{:0.1f}".format(row['close']))
         file_s.write(" |V " + DataView.millify(row['volume']))
 
-        file_s.write("\n")
+        chart_start_dt = dt - timedelta(days=60)
+        chart_url = "<a href=\"http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=330&freq=1&ma=6&maval=8,21,200&mocktick=1&lf=268435456&startdate={}&enddate={}&symb={}\" target=\"_blank\">2 month</a>"
+        print(chart_url.format(chart_start_dt.strftime('%m/%d/%Y'), dt.strftime('%m/%d/%Y'), symbol))
+        file_s.write(chart_url.format(chart_start_dt.strftime('%m/%d/%Y'), dt.strftime('%m/%d/%Y'), symbol))
+        file_s.write("<br><br>\n")
         file_s.close()
 
     vol_short_ma = 'vol_short_ma'
@@ -235,6 +239,8 @@ class DataView:
     ma200 = 'ma200'
     atr = 'atr'
     atr_smooth = 'atr_smooth'
+
+    candle_bull = 'candle_bull'
 
 
 class AlphaVantageData:

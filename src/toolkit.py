@@ -752,6 +752,24 @@ class VolGreaterThanSelector:
         return result
 
 
+class CandleBullSelector:
+    # candle bull
+    # usage: CloseGreaterThanSelector(1.5)
+    def __init__(self):
+        print(CandleBullSelector)
+
+    def describe(self):
+        return "{}[]".format(type(self).__name__)
+
+    def evaluate(self, row):
+        # return True if the condition met
+        result = False
+        if row[DataView.candle_bull]:
+            result = True
+
+        return result
+
+
 class GenericGreaterThanSelector:
     # close price greater than
     # usage: CloseGreaterThanSelector(1.5)

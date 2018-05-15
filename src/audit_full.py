@@ -7,4 +7,5 @@ boot = toolkit.Bootup()
 
 dv = toolkit.DataView(boot)
 
-print(dv.latest_data_date())
+# print(dv.latest_data_date())
+print("majority latest date:" + str(dv.majority_latest_date()))

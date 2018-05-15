@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from pytz import timezone
 import glob
 from shutil import copyfile
+import collections
 
 
 class CandleStick:
@@ -110,6 +111,16 @@ class DataView:
         data_store.close()
         print(latest)
         return latest[0]
+
+    def majority_latest_date(self):
+        data_store = HDFStore(self.data_read_only_file, mode='r')
+        latest = []
+        keys = data_store.keys()
+        for s in keys:
+            latest.append(str(data_store.get(s).tail(1).index.date[0]))
+        data_store.close()
+        c = collections.Counter(latest)
+        return c.most_common(n=2)
 
     def audit_comprehensive(self):
         # make sure all symbols in store has data

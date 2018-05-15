@@ -417,6 +417,11 @@ class AlphaVantageData:
         df.index = pd.to_datetime(df.index)
         return df, meta_data
 
+    def get_batch_quote(self):
+        symbols = ['AAPL', 'TSLA', "MSFT", 'QQQ']
+        data, meta_data = self.time_series.get_batch_stock_quotes(symbols)
+        return data, meta_data
+
 
 class VolumeEval:
     def __init__(self, ratio_to_short=2.0, ratio_to_long=1.5):

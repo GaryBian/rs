@@ -11,6 +11,7 @@ from pytz import timezone
 import glob
 from shutil import copyfile
 import collections
+import pandas_datareader
 
 
 class CandleStick:
@@ -833,3 +834,25 @@ class DateSelector:
             result = True
 
         return result
+
+
+class TgData:
+    def __init__(self, boot):
+        print('TgData init')
+        self.data_store_file = boot.data_file
+        self.data_read_only_file = boot.data_read_only_file
+        self.max_gap_to_cover = 50
+        self.seconds_between_api_call = 3
+
+    def symbols(self):
+        df = pandas_datareader.tiingo.get_tiingo_symbols()
+        print(df)
+
+    def daily(self):
+        r = pandas_datareader.tiingo.TiingoDailyReader(symbols=['AAPL', 'TSLA', 'CRC', 'QQQ', 'spy', 'baba'],
+                                                       start='2018-05-10',
+                                                       api_key='61b14782b1dc5d113d0d4512a2a08b62c5a3dbc7')
+        df = r.read()
+        print(df)
+        print(r.url)
+        r.close()

@@ -12,6 +12,7 @@ import glob
 from shutil import copyfile
 import collections
 import pandas_datareader
+import tiingo
 
 
 class CandleStick:
@@ -849,10 +850,31 @@ class TgData:
         print(df)
 
     def daily(self):
-        r = pandas_datareader.tiingo.TiingoDailyReader(symbols=['AAPL', 'TSLA', 'CRC', 'QQQ', 'spy', 'baba'],
-                                                       start='2018-05-10',
+        r = pandas_datareader.tiingo.TiingoDailyReader(symbols=['AAPL', 'TSLA', 'CRC'],
+                                                       start='2018-05-14',
                                                        api_key='61b14782b1dc5d113d0d4512a2a08b62c5a3dbc7')
         df = r.read()
         print(df)
         print(r.url)
         r.close()
+
+    def api2_get_daily(self):
+        config = {}
+
+        # To reuse the same HTTP Session across API calls (and have better performance), include a session key.
+        config['session'] = True
+
+        # If you don't have your API key as an environment variable,
+        # pass it in via a configuration dictionary.
+        config['api_key'] = "61b14782b1dc5d113d0d4512a2a08b62c5a3dbc7"
+
+        # Initialize
+        client = tiingo.TiingoClient(config)
+
+        historical_prices = client.get_ticker_price("AAPL",
+                                                    fmt='json',
+                                                    startDate='2018-05-01',
+                                                    endDate='2018-05-30',
+                                                    frequency='daily')
+
+        print(historical_prices)

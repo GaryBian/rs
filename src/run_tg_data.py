@@ -7,4 +7,4 @@ tg = toolkit.TgData(boot)
 
 tg.daily()
 
-tg.quote()
+tg.api2_get_daily()

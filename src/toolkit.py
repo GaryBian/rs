@@ -12,7 +12,6 @@ import glob
 from shutil import copyfile
 import collections
 import pandas_datareader
-#import tiingo
 
 
 class CandleStick:
@@ -235,6 +234,12 @@ class DataView:
         file_s.write(chart_url.format(chart_start_dt.strftime('%m/%d/%Y'), dt.strftime('%m/%d/%Y'), symbol))
         file_s.write("<br><br>\n")
         file_s.close()
+
+    open = 'open'
+    high = 'high'
+    low = 'low'
+    close = 'close'
+    volume = 'volume'
 
     vol_short_ma = 'vol_short_ma'
     vol_long_ma = 'vol_long_ma'
@@ -849,32 +854,22 @@ class TgData:
         df = pandas_datareader.tiingo.get_tiingo_symbols()
         print(df)
 
-    def daily(self):
-        r = pandas_datareader.tiingo.TiingoDailyReader(symbols=['AAPL', 'TSLA', 'CRC'],
-                                                       start='2018-05-14',
+    def daily(self, symbol):
+        r = pandas_datareader.tiingo.TiingoDailyReader(symbols=[symbol],
+                                                       start=(datetime.today() - timedelta(days=30)).strftime(
+                                                           '%Y-%m-%d'),
                                                        api_key='61b14782b1dc5d113d0d4512a2a08b62c5a3dbc7')
-        df = r.read()
-        print(df)
-        print(r.url)
+        df = self.generic_format(r.read())
         r.close()
+        return df
 
-    def api2_get_daily(self):
-        config = {}
+    def generic_format(self, df):
+        index_names = df.index.names
+        if not ('symbol' in index_names and 'date' in index_names and len(index_names) == 2):
+            raise ValueError('Tiingo data index name wrong:' + str(index_names))
 
-        # To reuse the same HTTP Session across API calls (and have better performance), include a session key.
-        config['session'] = True
-
-        # If you don't have your API key as an environment variable,
-        # pass it in via a configuration dictionary.
-        config['api_key'] = "61b14782b1dc5d113d0d4512a2a08b62c5a3dbc7"
-
-        # Initialize
-        client = tiingo.TiingoClient(config)
-
-        historical_prices = client.get_ticker_price("AAPL",
-                                                    fmt='json',
-                                                    startDate='2018-05-01',
-                                                    endDate='2018-05-30',
-                                                    frequency='daily')
-
-        print(historical_prices)
+        df.rename(columns={'adjClose': 'adjusted close'}, inplace=True)
+        df1 = df[[DataView.open, 'high', 'low', 'close', 'adjusted close', 'volume']]
+        df1.index = df1.index.get_level_values('date')
+        df1['volume'] = df1['volume'].astype('float64')
+        return df1

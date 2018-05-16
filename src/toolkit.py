@@ -854,9 +854,9 @@ class TgData:
         df = pandas_datareader.tiingo.get_tiingo_symbols()
         print(df)
 
-    def daily(self, symbol):
+    def daily(self, symbol, go_back_days=30):
         r = pandas_datareader.tiingo.TiingoDailyReader(symbols=[symbol],
-                                                       start=(datetime.today() - timedelta(days=30)).strftime(
+                                                       start=(datetime.today() - timedelta(days=go_back_days)).strftime(
                                                            '%Y-%m-%d'),
                                                        api_key='61b14782b1dc5d113d0d4512a2a08b62c5a3dbc7')
         df = self.generic_format(r.read())

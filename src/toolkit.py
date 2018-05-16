@@ -207,8 +207,8 @@ class DataView:
         return df
 
     @staticmethod
-    def write_query_result(symbol, dt, row, run_label):
-        file_s = open("../candledata/" + run_label + "/" + symbol + "_candle_selected.html", "a")
+    def write_query_result(boot, symbol, dt, row, run_label):
+        file_s = open(boot.base_path + '/../candledata/' + run_label + "/" + symbol + "_candle_selected.html", "a")
         file_s.write("" + dt.strftime('%Y-%m-%d'))
         file_s.write("|" + ('NIU' if row['candle_bull'] else 'RED'))
         file_s.write("|H/Body " + "{:0.2f}".format(row['candle_head_bi_body']))

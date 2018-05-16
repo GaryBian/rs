@@ -31,6 +31,7 @@ def add_to_store(boot, symbol, data):
     data_store.close()
 
 
+print('start download data from tg')
 boot = toolkit.Bootup()
 print(boot.base_path)
 
@@ -48,3 +49,5 @@ for s in lines:
         merge_and_add_to_store(boot, s, df)
     except:
         print('error processing:' + s)
+
+print('end download data from tg')

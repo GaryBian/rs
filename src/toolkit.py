@@ -12,7 +12,7 @@ import glob
 from shutil import copyfile
 import collections
 import pandas_datareader
-import tiingo
+#import tiingo
 
 
 class CandleStick:

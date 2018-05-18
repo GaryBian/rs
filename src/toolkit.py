@@ -114,7 +114,11 @@ class DataView:
         return latest[0]
 
     def majority_latest_date(self):
-        data_store = HDFStore(self.data_read_only_file, mode='r')
+        return DataView.majority_latest_date(self.data_read_only_file)
+
+    @staticmethod
+    def majority_latest_date(data_file):
+        data_store = HDFStore(data_file, mode='r')
         latest = []
         keys = data_store.keys()
         for s in keys:

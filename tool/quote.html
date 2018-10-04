@@ -23,9 +23,10 @@
             <input type="button" style="width: 50px" value="10d_h" onclick="clickSymbol10DaysHour();"/>
             <input type="button" style="width: 50px" value="2y_w" onclick="clickSymbol2YearWeek();"/>
             <input type="button" style="width: 50px" value="5y_w" onclick="clickSymbol5YearWeek();"/>
-            <input type="button" style="width: 50px" value="3y_w_sc" onclick="clickSymbol3YearWeekStockChart();"/>
+			<input type="button" style="width: 50px" value="10y_w" onclick="clickSymbol10YearWeek();"/>
+            <input type="button" style="width: 50px" value="bb" onclick="clickSymbol3YearWeekStockChart();"/>
             <input type="button" style="width: 50px" value="finviz" onclick="finviz();"/>
-            Ver 2018.4
+            Ver 2018.1003
 
             <br/><br/><a target="_blank" href="http://stockcharts.com/h-sc/ui?s=%24NYSI">$NYSI</a>
         </td>
@@ -51,10 +52,10 @@
 
             <br>
             <input type="button" style="width: 50px" value="IQ" onclick="setSymbol('IQ');"/>
-            <input type="button" style="width: 50px" value="DAN" onclick="setSymbol('DAN');"/>
-            <input type="button" style="width: 50px" value="MEOH" onclick="setSymbol('MEOH');"/>
-            <input type="button" style="width: 50px" value="CPLP" onclick="setSymbol('CPLP');"/>
-            <input type="button" style="width: 50px" value="GFF" onclick="setSymbol('GFF');"/>
+            <input type="button" style="width: 50px" value="SMIN" onclick="setSymbol('SMIN');"/>
+            <input type="button" style="width: 50px" value="ASHR" onclick="setSymbol('ASHR');"/>
+            <input type="button" style="width: 50px" value="EWZ" onclick="setSymbol('EWZ');"/>
+            <input type="button" style="width: 50px" value="EIDO" onclick="setSymbol('EIDO');"/>
             <input type="button" style="width: 50px" value="NXY" onclick="setSymbol('NXY');"/>
             <input type="button" style="width: 50px" value="PJC" onclick="setSymbol('PJC');"/>
 
@@ -218,6 +219,13 @@
             document.getElementById("range").innerHTML = "5y weekly";
         }
 
+		function clickSymbol10YearWeek()
+        {
+            var url2 = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?type=4&size=4&style=330&freq=2&time=13&ma=6&maval=8,21,200&lf=268435456&mocktick=1&symb="+ symbol;
+            top.frames['right1'].location.href = url2;
+            document.getElementById("range").innerHTML = "10y weekly";
+        }
+		
         function clickSymbol2YearWeekStockChart()
         {
             var url2 = "http://stockcharts.com/h-sc/ui?nIndicators=3&nOverlays=3&nMaxOverlays=3&nMaxIndicators=3&predefChanged=true&isPermanentId=false&setPermanentId=false&defaultChart=false&chartId=&style=&dataTotalDays=10&inputperiod=D&originalperiod=D&currentSetting=0|||&curCustomSetting=0|||&customSettingsCount=0&curChartList=&curChartName=&curChartNameIndex=0&period=W&period2=W&dataRange=predef%3A2|0|0&bar=5&gap=0&bars-fill=&years=2&months=0&days=0&bars-predef=&start=2011-01-09&end=%28today%29&symStyle=type%3D%22candle%22&renkoUnit=atr&renkoBoxSize=&renkoPriceField=close&kagiUnit=atr&kagiReversal=&kagiPriceField=close&chartSize=Landscape&customWidth=460&customHeight=284&chartSkin=default&showVolume=overlay&dataLog=true&dataSignalP=sig&dataSignalV=sig&layerTitles=true&antiAliasOn=true&overType_=B&overArgs_=&overType_0=EMA&overArgs_0=8&overType_1=EMA&overArgs_1=21&overType_2=EMA&overArgs_2=200&indType_=B&indArgs_=&indLoc_=below&indType_0=RSI&indArgs_0=14&indLoc_0=above&indType_1=MACD&indArgs_1=12%2C26%2C9&indLoc_1=below&indType_2=B&indArgs_2=&indLoc_2=below&syncHeight=&symbol="+ symbol;
@@ -234,7 +242,7 @@
 
         function clickSymbol3YearWeekStockChart()
         {
-            var url2 = "http://stockcharts.com/h-sc/ui?nIndicators=3&nOverlays=3&nMaxOverlays=3&nMaxIndicators=3&predefChanged=true&isPermanentId=false&setPermanentId=false&defaultChart=false&chartId=&style=&dataTotalDays=10&inputperiod=D&originalperiod=D&currentSetting=0|||&curCustomSetting=0|||&customSettingsCount=0&curChartList=&curChartName=&curChartNameIndex=0&period=W&period2=W&dataRange=predef%3A3|0|0&bar=5&gap=0&bars-fill=&years=3&months=0&days=0&bars-predef=&start=2011-01-09&end=%28today%29&symStyle=type%3D%22candle%22&renkoUnit=atr&renkoBoxSize=&renkoPriceField=close&kagiUnit=atr&kagiReversal=&kagiPriceField=close&chartSize=Landscape&customWidth=460&customHeight=284&chartSkin=default&showVolume=overlay&dataLog=true&dataSignalP=sig&dataSignalV=sig&layerTitles=true&antiAliasOn=true&overType_=B&overArgs_=&overType_0=EMA&overArgs_0=8&overType_1=EMA&overArgs_1=21&overType_2=EMA&overArgs_2=200&indType_=B&indArgs_=&indLoc_=below&indType_0=RSI&indArgs_0=14&indLoc_0=above&indType_1=MACD&indArgs_1=12%2C26%2C9&indLoc_1=below&indType_2=B&indArgs_2=&indLoc_2=below&syncHeight=&symbol="+ symbol;
+            var url2 = "https://stockcharts.com/c-sc/sc?s=" + symbol + "&p=D&b=5&g=0&i=t78463826379&r=1538580202893";
             top.frames['right1'].location.href = url2;
             document.getElementById("range").innerHTML = "3y weekly StockChart";
         }

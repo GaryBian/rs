@@ -60,7 +60,18 @@
             <input type="button" style="width: 50px" value="PJC" onclick="setSymbol('PJC');"/>
 
         </td>
+		
+        <td width="400px">
+            <form>
+                P: <input type="text" name="p" id="fibpriceinput" size="5" /> <input type="button" style="width: 100px"
+                                                                                   value="Fibonacci "
+                                                                                   onclick="fib();"/>
+</form>																				   
 
+<div id="fibresult">
+</div>	
+       
+        </td>
 
     </tr>
 
@@ -106,6 +117,27 @@
             document.getElementById("range").innerHTML = "default 3 month";
         }
 
+		function fib()
+        {
+            fibinput = document.getElementById("fibpriceinput").value;
+		
+			var str = "";
+            str += "23.6%: <b>";
+			str += parseFloat((1.0-0.236) * fibinput).toFixed(2);
+			str += "</b><br/>";
+            str += "38.2%: <b>";
+			str += parseFloat((1.0-0.382) * fibinput).toFixed(2);
+			str += "</b><br/>";
+            str += "50.0%: <b>";
+			str += parseFloat((1.0-0.5) * fibinput).toFixed(2);
+			str += "</b><br/>";
+            str += "61.8%: <b>";
+			str += parseFloat((1.0-0.618) * fibinput).toFixed(2);
+			str += "</b>";
+
+			document.getElementById("fibresult").innerHTML =  str;
+        }
+		
         function prevchart()
         {
             if(curMonth==4 || curMonth==7 || curMonth==10 )

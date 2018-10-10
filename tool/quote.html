@@ -63,9 +63,15 @@
 		
         <td width="400px">
             <form>
-                P: <input type="text" name="p" id="fibpriceinput" size="5" /> <input type="button" style="width: 100px"
+                <input type="text" name="p" id="fibpriceinput" size="5" /> 
+				<input type="button" style="width: 100px"
                                                                                    value="Fibonacci "
                                                                                    onclick="fib();"/>
+																				   <br/><br/>
+				From: <input type="text" name="p" id="fromtopinput" size="5" /> / <input type="text" name="p" id="frombottominput" size="5" /> 
+				<input type="button" style="width: 100px"
+                                                                                   value="Down From"
+                                                                                   onclick="downfrom();"/>
 </form>																				   
 
 <div id="fibresult">
@@ -137,6 +143,20 @@
 
 			document.getElementById("fibresult").innerHTML =  str;
         }
+		
+
+		function downfrom()
+        {
+		    fromtopinput = document.getElementById("fromtopinput").value;
+            frombottominput = document.getElementById("frombottominput").value;
+		
+			var str = "Down<br/><b>";
+			str += parseFloat((1.0- fromtopinput / frombottominput) * 100.0).toFixed(0);
+			str += "%</b>";
+
+			document.getElementById("fibresult").innerHTML =  str;
+        }
+		
 		
         function prevchart()
         {

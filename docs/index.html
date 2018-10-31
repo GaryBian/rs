@@ -49,7 +49,7 @@ function imgUrlFunc(sym) {
 }
 
 var symbs = document.getElementById("sym_div").innerHTML;
-alert(symbs);
+// alert(symbs);
 
 var myStringArray;
 myStringArray = symbs.split(","); 
@@ -63,7 +63,7 @@ for (var i = 0; i < arrayLength; i++) {
         imghtml = imghtml + "<b>"+(i+1)+"<b>" + imgUrlFunc(myStringArray[i].trim());
     }
 }
-alert(imghtml);
+//alert(imghtml);
 
 document.getElementById("main_div").innerHTML = imghtml;
  

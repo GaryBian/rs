@@ -1,0 +1,77 @@
+<html>
+<body>
+
+
+<div id="main_div"></div>
+
+<div id="sym_div">
+APLE,
+
+PK,
+PEB,
+
+AAT,
+
+AHT,
+BXP,
+BHR,
+CLDT,
+CHSP,
+CMCT,
+CLNY,
+CDOR,
+CTO,
+CPLG,
+DRH,
+STAY,
+HT,
+HPT,
+HST,
+IHT,
+STAR,
+KW,
+LHO,
+MGP,
+
+RLJ,
+RHP,
+SOHO,
+INN,
+SHO,
+VICI,
+XHR,
+</div>
+
+<div id="div1"></div>
+
+
+</body>
+ 
+<script type="text/javascript">
+
+function imgUrlFunc(sym) {
+    return "<p><img src=\"http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?uf=8&type=4&size=3&style=330&freq=2&time=9&ma=1&maval=20&lf=4&lf2=0&lf3=0&mocktick=1&symb=" + sym + "\"/></p>";
+}
+
+var symbs = document.getElementById("sym_div").innerHTML;
+// alert(symbs);
+
+var myStringArray;
+myStringArray = symbs.split(","); 
+console.log(myStringArray);
+
+var imghtml = "";
+var arrayLength = myStringArray.length;
+for (var i = 0; i < arrayLength; i++) {
+    // alert(myStringArray[i].trim());
+	if (myStringArray[i].trim()) {
+        imghtml = imghtml + "<b>"+(i+1)+"<b>" + imgUrlFunc(myStringArray[i].trim());
+    }
+}
+//alert(imghtml);
+
+document.getElementById("main_div").innerHTML = imghtml;
+ 
+</script>
+
+</html>

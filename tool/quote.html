@@ -19,14 +19,14 @@
             <input type="button" style="width: 50px" value="1y" onclick="clickSymbol1Year();"/>
             <input type="button" style="width: 50px" value="5d15m" onclick="clickSymbol5Days15Minutes();"/>
             <input type="button" style="width: 50px" value="1d5m" onclick="clickSymbol1Day5Min();"/>
-            <input type="button" style="width: 50px" value="5d_h" onclick="clickSymbol5DaysHour();"/>
+            <input type="button" style="width: 50px" value="bb" onclick="clickSymbolBB();"/>
             <input type="button" style="width: 50px" value="10d_h" onclick="clickSymbol10DaysHour();"/>
             <input type="button" style="width: 50px" value="2y_w" onclick="clickSymbol2YearWeek();"/>
             <input type="button" style="width: 50px" value="5y_w" onclick="clickSymbol5YearWeek();"/>
 			<input type="button" style="width: 50px" value="10y_w" onclick="clickSymbol10YearWeek();"/>
             <input type="button" style="width: 50px" value="bb" onclick="clickSymbol3YearWeekStockChart();"/>
             <input type="button" style="width: 50px" value="finviz" onclick="finviz();"/>
-            Ver 2018.1009
+            Ver 2018.1107
 
             <br/><br/><a target="_blank" href="http://stockcharts.com/h-sc/ui?s=%24NYSI">$NYSI</a>
         </td>
@@ -239,10 +239,10 @@
             document.getElementById("range").innerHTML = "5 days";
         }
 
-        function clickSymbol5DaysHour()
+        function clickSymbolBB()
 		{
-		    top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?ma=6&maval=8,21,200&type=4&size=4&style=330&freq=8&time=3&lf=268435456&mocktick=1&symb="+ symbol;
-            document.getElementById("range").innerHTML = "5 days";
+		    top.frames['right1'].location.href = "http://bigcharts.marketwatch.com/kaavio.Webhost/charts/big.chart?uf=8&type=4&size=4&style=330&freq=1&time=7&ma=1&maval=20&lf=4&lf2=0&lf3=0&mocktick=1&symb="+ symbol;
+            document.getElementById("range").innerHTML = "BB";
         }
 
         function clickSymbol1Day5Min()
